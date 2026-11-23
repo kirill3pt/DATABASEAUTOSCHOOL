@@ -1,0 +1,683 @@
+﻿<Window x:Class="DATABASEAUTOSCHOOL.Interfaces.ModuleAdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Автошкола — Панель администратора"
+        Height="780"
+        Width="1250"
+        MinHeight="650"
+        MinWidth="1000"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BackgroundColor}"
+        FontFamily="Segoe UI">
+
+    <Window.Resources>
+
+        <Style x:Key="NavButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="46"/>
+            <Setter Property="Margin" Value="0,3"/>
+            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Foreground" Value="#C5D0E3"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Cursor" Value="Hand"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="buttonBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="9"
+                                Padding="{TemplateBinding Padding}">
+
+                            <ContentPresenter
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                TextElement.Foreground="{TemplateBinding Foreground}"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="buttonBorder"
+                                        Property="Background"
+                                        Value="#344568"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="buttonBorder"
+                                        Property="Background"
+                                        Value="#4169E1"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="StatCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource SurfaceColor}"/>
+            <Setter Property="CornerRadius" Value="14"/>
+            <Setter Property="Padding" Value="22"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style x:Key="ModernDataGridStyle" TargetType="{x:Type DataGrid}">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#263550"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="RowBackground" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="#FAFBFE"/>
+            <Setter Property="AlternationCount" Value="2"/>
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#EEF1F6"/>
+            <Setter Property="VerticalGridLinesBrush" Value="Transparent"/>
+            <Setter Property="RowHeight" Value="58"/>
+            <Setter Property="ColumnHeaderHeight" Value="48"/>
+            <Setter Property="FontFamily" Value="Segoe UI Variable"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="SelectionUnit" Value="FullRow"/>
+            <Setter Property="CanUserResizeRows" Value="False"/>
+            <Setter Property="CanUserReorderColumns" Value="False"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="RowHeaderWidth" Value="0"/>
+
+            <Setter Property="ColumnHeaderStyle">
+                <Setter.Value>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="#F7F8FC"/>
+                        <Setter Property="Foreground" Value="#73809A"/>
+                        <Setter Property="FontFamily" Value="Segoe UI Variable"/>
+                        <Setter Property="FontSize" Value="12"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="Padding" Value="16,0"/>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                        <Setter Property="BorderBrush" Value="#E9EDF4"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                                    <Border Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            Padding="{TemplateBinding Padding}">
+
+                                        <ContentPresenter
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            RecognizesAccessKey="True"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#EFF3FC"/>
+                                <Setter Property="Foreground" Value="#4169E1"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="CellStyle">
+                <Setter.Value>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Foreground" Value="#34415B"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                    <Border Background="{TemplateBinding Background}"
+                                            Padding="16,0">
+
+                                        <ContentPresenter
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Foreground" Value="#3156C5"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="RowStyle">
+                <Setter.Value>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                        <Setter Property="BorderBrush" Value="#EEF1F6"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#F4F7FF"/>
+                            </Trigger>
+
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#EAF0FF"/>
+                                <Setter Property="Foreground" Value="#3156C5"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="245"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Боковое меню -->
+        <Border Grid.Column="0" Background="#202B46">
+            <DockPanel Margin="20">
+
+                <!-- Нижняя часть меню -->
+                <StackPanel DockPanel.Dock="Bottom">
+                    <Border Height="1"
+                            Background="#3A4864"
+                            Margin="0,15,0,15"/>
+
+                    <Button Style="{StaticResource NavButtonStyle}"
+                            Click="Settings_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="⚙"
+                                       Width="25"
+                                       FontSize="17"
+                                       Foreground="#C5D0E3"/>
+
+                            <TextBlock Text="Настройки"
+                                       Foreground="#C5D0E3"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource NavButtonStyle}"
+                            Click="About_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="ⓘ"
+                                       Width="25"
+                                       FontSize="17"
+                                       Foreground="#C5D0E3"/>
+
+                            <TextBlock Text="О программе"
+                                       Foreground="#C5D0E3"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource NavButtonStyle}"
+                            Foreground="#F08A8A"
+                            Click="Logout_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="↪"
+                                       Width="25"
+                                       FontSize="17"
+                                       Foreground="#F08A8A"/>
+
+                            <TextBlock Text="Выйти"
+                                       Foreground="#F08A8A"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <!-- Верхняя часть меню -->
+                <StackPanel>
+
+                    <!-- Логотип приложения -->
+                    <StackPanel Margin="5,8,0,35">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🚘"
+                                       FontSize="25"
+                                       Margin="0,0,9,0"
+                                       VerticalAlignment="Center"/>
+
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="DRIVING SCHOOL"
+                                           Foreground="White"
+                                           FontSize="17"
+                                           FontWeight="Bold"/>
+
+                                <TextBlock Text="ADMINISTRATION"
+                                           Foreground="#8999B8"
+                                           FontSize="9"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Основные разделы -->
+                    <TextBlock Text="ГЛАВНОЕ"
+                               Foreground="#7888A5"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               Margin="10,0,0,10"/>
+
+                    <Button x:Name="DashboardButton"
+                            Style="{StaticResource NavButtonStyle}"
+                            Background="#4169E1"
+                            Foreground="White"
+                            Click="Dashboard_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="⌂"
+                                       Width="25"
+                                       FontSize="19"
+                                       Foreground="White"/>
+
+                            <TextBlock Text="Главная"
+                                       Foreground="White"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Управление данными -->
+                    <TextBlock Text="УПРАВЛЕНИЕ"
+                               Foreground="#7888A5"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               Margin="10,25,0,10"/>
+
+                    <Button x:Name="StudentsButton"
+                            Style="{StaticResource NavButtonStyle}"
+                            Click="Students_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Ученики"
+                                       Foreground="#C5D0E3"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="InstructorsButton"
+                            Style="{StaticResource NavButtonStyle}"
+                            Click="Instructors_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Инструкторы"
+                                       Foreground="#C5D0E3"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="CarsButton"
+                            Style="{StaticResource NavButtonStyle}"
+                            Click="Cars_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Автомобили"
+                                       Foreground="#C5D0E3"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="LessonsButton"
+                            Style="{StaticResource NavButtonStyle}"
+                            Click="Lessons_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Расписание"
+                                       Foreground="#C5D0E3"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Дополнительные разделы -->
+                    <TextBlock Text="ДОПОЛНИТЕЛЬНО"
+                               Foreground="#7888A5"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               Margin="10,25,0,10"/>
+
+                    <Button x:Name="ReportsButton"
+                            Style="{StaticResource NavButtonStyle}"
+                            Click="Reports_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Отчёты"
+                                       Foreground="#C5D0E3"/>
+                        </StackPanel>
+                    </Button>
+
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- Основная область -->
+        <Grid Grid.Column="1" Margin="32,25,32,25">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="65"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Заголовок и информация о пользователе -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Панель администратора"
+                               FontSize="21"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource TextColor}"/>
+
+                    <TextBlock Text="Управление информационной системой автошколы"
+                               FontSize="12"
+                               Foreground="{StaticResource SecondaryTextColor}"
+                               Margin="0,3,0,0"/>
+                </StackPanel>
+
+                <Border Grid.Column="1"
+                        Background="{StaticResource SurfaceColor}"
+                        CornerRadius="10"
+                        Padding="15,8"
+                        VerticalAlignment="Center">
+
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Width="9"
+                                 Height="9"
+                                 Fill="#38B879"
+                                 VerticalAlignment="Center"
+                                 Margin="0,0,9,0"/>
+
+                        <TextBlock Text="Администратор"
+                                   Foreground="{StaticResource TextColor}"
+                                   FontSize="13"
+                                   FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Содержимое выбранного раздела -->
+            <Grid Grid.Row="1" Margin="0,20,0,0">
+
+                <!-- Главная страница -->
+                <ScrollViewer x:Name="DashboardPanel"
+                              VerticalScrollBarVisibility="Auto">
+
+                    <StackPanel>
+                        <TextBlock Text="Добро пожаловать!"
+                                   FontSize="27"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource TextColor}"/>
+
+                        <TextBlock Text="Здесь вы можете управлять всеми основными данными автошколы."
+                                   FontSize="14"
+                                   Foreground="{StaticResource SecondaryTextColor}"
+                                   Margin="0,7,0,25"/>
+
+                        <!-- Статистика -->
+                        <UniformGrid Columns="3" Margin="0,0,0,22">
+
+                            <Border Style="{StaticResource StatCardStyle}"
+                                    Margin="0,0,12,0">
+                                <StackPanel>
+                                    <TextBlock Text="УЧЕНИКИ"
+                                               FontSize="11"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource SecondaryTextColor}"/>
+
+                                    <TextBlock Text="—"
+                                               FontSize="30"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource TextColor}"
+                                               Margin="0,10,0,0"/>
+
+                                    <TextBlock Text="Всего в системе"
+                                               FontSize="12"
+                                               Foreground="{StaticResource SecondaryTextColor}"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{StaticResource StatCardStyle}"
+                                    Margin="6,0">
+                                <StackPanel>
+                                    <TextBlock Text="ИНСТРУКТОРЫ"
+                                               FontSize="11"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource SecondaryTextColor}"/>
+
+                                    <TextBlock Text="—"
+                                               FontSize="30"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource TextColor}"
+                                               Margin="0,10,0,0"/>
+
+                                    <TextBlock Text="Зарегистрированные"
+                                               FontSize="12"
+                                               Foreground="{StaticResource SecondaryTextColor}"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{StaticResource StatCardStyle}"
+                                    Margin="12,0,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="ЗАНЯТИЯ"
+                                               FontSize="11"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource SecondaryTextColor}"/>
+
+                                    <TextBlock Text="—"
+                                               FontSize="30"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource TextColor}"
+                                               Margin="0,10,0,0"/>
+
+                                    <TextBlock Text="Всего в расписании"
+                                               FontSize="12"
+                                               Foreground="{StaticResource SecondaryTextColor}"/>
+                                </StackPanel>
+                            </Border>
+
+                        </UniformGrid>
+
+                        <!-- Быстрый переход к разделам -->
+                        <Border Style="{StaticResource StatCardStyle}"
+                                Padding="25">
+
+                            <StackPanel>
+                                <TextBlock Text="Быстрый доступ"
+                                           FontSize="18"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource TextColor}"
+                                           Margin="0,0,0,8"/>
+
+                                <TextBlock Text="Выберите нужный раздел в боковом меню для управления данными."
+                                           FontSize="13"
+                                           Foreground="{StaticResource SecondaryTextColor}"
+                                           TextWrapping="Wrap"/>
+
+                                <WrapPanel Margin="0,20,0,0">
+                                    <Button Content="Ученики"
+                                            Width="125"
+                                            Height="40"
+                                            Margin="0,0,10,10"
+                                            Click="Students_Click"/>
+
+                                    <Button Content="Инструкторы"
+                                            Width="135"
+                                            Height="40"
+                                            Margin="0,0,10,10"
+                                            Click="Instructors_Click"/>
+
+                                    <Button Content="Автомобили"
+                                            Width="135"
+                                            Height="40"
+                                            Margin="0,0,10,10"
+                                            Click="Cars_Click"/>
+
+                                    <Button Content="Расписание"
+                                            Width="135"
+                                            Height="40"
+                                            Margin="0,0,10,10"
+                                            Click="Lessons_Click"/>
+                                </WrapPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Панель разделов -->
+                <Border x:Name="SectionPanel"
+                        Visibility="Collapsed"
+                        Background="{StaticResource SurfaceColor}"
+                        CornerRadius="14"
+                        BorderBrush="{StaticResource BorderColor}"
+                        BorderThickness="1"
+                        Padding="30">
+
+                    <StackPanel VerticalAlignment="Top">
+                        <TextBlock x:Name="SectionTitle"
+                                   Text="Раздел"
+                                   FontSize="26"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource TextColor}"/>
+
+                        <TextBlock x:Name="SectionDescription"
+                                   Text="Описание раздела"
+                                   FontSize="14"
+                                   Foreground="{StaticResource SecondaryTextColor}"
+                                   Margin="0,10,0,25"
+                                   TextWrapping="Wrap"/>
+
+                        <Border Background="{StaticResource BackgroundColor}"
+                                CornerRadius="10"
+                                Padding="20">
+
+                            <TextBlock Text="Рабочая область раздела будет добавлена на следующем этапе."
+                                       FontSize="13"
+                                       Foreground="{StaticResource SecondaryTextColor}"
+                                       TextWrapping="Wrap"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Раздел автомобилей -->
+                <Grid x:Name="CarsPanel"
+                      Visibility="Collapsed">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Заголовок и действия -->
+                    <Grid Grid.Row="0" Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel>
+                            <TextBlock Text="Автомобили"
+                                       FontSize="26"
+                                       FontWeight="Bold"
+                                       Foreground="#202B46"/>
+                            <TextBlock Text="Управление автопарком автошколы"
+                                       FontSize="14"
+                                       Foreground="#8791A5"
+                                       Margin="0,5,0,0"/>
+                            <TextBlock Text="Для множественного удаления зажмите CTRL и выберите нужные записи"
+                                       FontSize="14"
+                                       Foreground="#8791A5"
+                                       Margin="0,5,0,0"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+
+                            <Button Content="+ Добавить"
+                                    Click="AddCar_Click"
+                                    Padding="18,10"
+                                    Margin="0,0,10,0"
+                                    Background="#4169E1"
+                                    Foreground="White"
+                                    BorderThickness="0"
+                                    Cursor="Hand"/>
+
+                            <Button Content="Удалить"
+                                    Click="DeleteCars_Click"
+                                    Padding="18,10"
+                                    Margin="0,0,10,0"
+                                    Background="#D9534F"
+                                    Foreground="White"
+                                    BorderThickness="0"
+                                    Cursor="Hand"/>
+
+                            <Button Content="Обновить"
+                                    Click="RefreshCars_Click"
+                                    Padding="18,10"
+                                    Background="#E9EDF5"
+                                    Foreground="#202B46"
+                                    BorderThickness="0"
+                                    Cursor="Hand"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Таблица автомобилей -->
+                    <Border Grid.Row="1"
+                            Background="White"
+                            CornerRadius="14"
+                            BorderBrush="#E5EAF3"
+                            BorderThickness="1"
+                            Padding="10">
+
+                        <DataGrid x:Name="CarsDataGrid"
+                                  Style="{StaticResource ModernDataGridStyle}"
+                                  HeadersVisibility="Column"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                  SelectionMode="Extended"
+                                  SelectionUnit="FullRow"
+                                  CanUserSortColumns="True"
+                                  CanUserReorderColumns="True"
+                                  IsReadOnly="True"
+                                  AutoGenerateColumns="False">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID"
+                                                    Binding="{Binding [ID]}"
+                                                    Width="70"/>
+
+                                <DataGridTextColumn Header="Марка автомобиля"
+                                                    Binding="{Binding [Марка]}"
+                                                    Width="1.1*"/>
+
+                                <DataGridTextColumn Header="Модель"
+                                                    Binding="{Binding [Модель]}"
+                                                    Width="1.1*"/>
+
+                                <DataGridTextColumn Header="Государственный номер"
+                                                    Binding="{Binding [Гос. номер]}"
+                                                    Width="1.4*"/>
+
+                                <DataGridTextColumn Header="Год выпуска"
+                                                    Binding="{Binding [Год выпуска]}"
+                                                    Width="120"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                </Grid>
+
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
