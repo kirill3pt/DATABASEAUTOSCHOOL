@@ -54,7 +54,7 @@
                             Margin="0,35,0,0"/>
                 </StackPanel>
 
-                <TextBlock Text="АВТОШКОЛА • 2026"
+                <TextBlock Text="Бережецкий К.Т., ФТФ, ИВТ-2, 3 КУРС. 2026"
                            Foreground="#72819E"
                            FontSize="11"
                            HorizontalAlignment="Left"
