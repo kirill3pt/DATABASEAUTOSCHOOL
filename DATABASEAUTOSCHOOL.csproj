@@ -67,6 +67,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Interfaces\AddLessonWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Interfaces\AddPaymentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -123,12 +127,22 @@
     <Compile Include="Interfaces\AddInstructorWindow.xaml.cs">
       <DependentUpon>AddInstructorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\AddLessonWindow.xaml.cs">
+      <DependentUpon>AddLessonWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\AddPaymentWindow.xaml.cs">
       <DependentUpon>AddPaymentWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\AddStudentWindow.xaml.cs">
       <DependentUpon>AddStudentWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\Admin\ModuleAdminWindow.Cars.cs" />
+    <Compile Include="Interfaces\Admin\ModuleAdminWindow.Groups.cs" />
+    <Compile Include="Interfaces\Admin\ModuleAdminWindow.Instructors.cs" />
+    <Compile Include="Interfaces\Admin\ModuleAdminWindow.Lessons.cs" />
+    <Compile Include="Interfaces\Admin\ModuleAdminWindow.Navigation.cs" />
+    <Compile Include="Interfaces\Admin\ModuleAdminWindow.Payments.cs" />
+    <Compile Include="Interfaces\Admin\ModuleAdminWindow.Students.cs" />
     <Compile Include="Interfaces\EditInstructorWindow.xaml.cs">
       <DependentUpon>EditInstructorWindow.xaml</DependentUpon>
     </Compile>
@@ -145,6 +159,10 @@
       <DependentUpon>ModuleInstructorWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Interfaces\RegisterInstructionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaces\Resources\AdminStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

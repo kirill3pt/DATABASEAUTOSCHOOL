@@ -1,0 +1,275 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="NavButtonStyle"
+       TargetType="{x:Type Button}"
+       BasedOn="{StaticResource {x:Type Button}}">
+
+        <Setter Property="Height" Value="42"/>
+        <Setter Property="Margin" Value="0,2"/>
+        <Setter Property="Padding" Value="14,0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Foreground" Value="#D7DED8"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="ButtonBorder"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="6"
+                        Padding="{TemplateBinding Padding}">
+
+                        <ContentPresenter
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        TextElement.Foreground="{TemplateBinding Foreground}"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ButtonBorder"
+                                Property="Background"
+                                Value="#3B4742"/>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ButtonBorder"
+                                Property="Background"
+                                Value="#536158"/>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ButtonBorder"
+                                Property="Opacity"
+                                Value="0.4"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!-- Карточки статистики -->
+    <Style x:Key="StatCardStyle"
+       TargetType="{x:Type Border}">
+
+        <Setter Property="Background"
+            Value="{DynamicResource SurfaceColor}"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Padding" Value="22"/>
+        <Setter Property="BorderBrush"
+            Value="{DynamicResource BorderColor}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+
+    </Style>
+
+
+    <!-- Основная кнопка действий -->
+    <Style x:Key="AdminActionButtonStyle"
+       TargetType="{x:Type Button}"
+       BasedOn="{StaticResource AccentButtonStyle}">
+
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Padding" Value="17,8"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+
+    </Style>
+
+
+    <!-- Кнопка удаления -->
+    <Style x:Key="DeleteActionButtonStyle"
+       TargetType="{x:Type Button}"
+       BasedOn="{StaticResource AccentButtonStyle}">
+
+        <Setter Property="Background"
+            Value="{DynamicResource DangerColor}"/>
+        <Setter Property="Foreground" Value="#FFFFFF"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Padding" Value="17,8"/>
+        <Setter Property="FontSize" Value="12"/>
+
+    </Style>
+
+
+    <!-- Светлая кнопка -->
+    <Style x:Key="LightActionButtonStyle"
+       TargetType="{x:Type Button}"
+       BasedOn="{StaticResource SecondaryButtonStyle}">
+
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Padding" Value="17,8"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Background"
+            Value="{DynamicResource MutedSurfaceColor}"/>
+
+    </Style>
+
+
+    <!-- Таблица -->
+    <Style x:Key="ModernDataGridStyle"
+       TargetType="{x:Type DataGrid}">
+
+        <Setter Property="Background"
+            Value="{DynamicResource SurfaceColor}"/>
+        <Setter Property="Foreground"
+            Value="{DynamicResource TextColor}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="RowBackground"
+            Value="{DynamicResource SurfaceColor}"/>
+        <Setter Property="AlternatingRowBackground"
+            Value="#F4F3EE"/>
+        <Setter Property="AlternationCount" Value="2"/>
+        <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+        <Setter Property="HorizontalGridLinesBrush"
+            Value="{DynamicResource BorderColor}"/>
+        <Setter Property="VerticalGridLinesBrush"
+            Value="Transparent"/>
+        <Setter Property="RowHeight" Value="56"/>
+        <Setter Property="ColumnHeaderHeight" Value="46"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="SelectionMode" Value="Single"/>
+        <Setter Property="SelectionUnit" Value="FullRow"/>
+        <Setter Property="CanUserResizeRows" Value="False"/>
+        <Setter Property="CanUserReorderColumns" Value="False"/>
+        <Setter Property="CanUserAddRows" Value="False"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="AutoGenerateColumns" Value="False"/>
+        <Setter Property="RowHeaderWidth" Value="0"/>
+
+        <!-- Заголовки столбцов -->
+        <Setter Property="ColumnHeaderStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+
+                    <Setter Property="Background"
+                        Value="{DynamicResource MutedSurfaceColor}"/>
+                    <Setter Property="Foreground"
+                        Value="{DynamicResource SecondaryTextColor}"/>
+                    <Setter Property="FontFamily" Value="Segoe UI"/>
+                    <Setter Property="FontSize" Value="11"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="Padding" Value="16,0"/>
+                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                    <Setter Property="BorderBrush"
+                        Value="{DynamicResource BorderColor}"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                                <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Padding="{TemplateBinding Padding}">
+
+                                    <ContentPresenter
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    RecognizesAccessKey="True"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+
+                    <Style.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background"
+                                Value="#EAE8E0"/>
+                            <Setter Property="Foreground"
+                                Value="{DynamicResource TextColor}"/>
+                        </Trigger>
+
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+
+
+        <!-- Ячейки -->
+        <Setter Property="CellStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type DataGridCell}">
+
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Foreground"
+                        Value="{DynamicResource TextColor}"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                <Border Background="{TemplateBinding Background}"
+                                    Padding="16,0">
+
+                                    <ContentPresenter
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+
+                    <Style.Triggers>
+
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground"
+                                Value="{DynamicResource TextColor}"/>
+                            <Setter Property="Background"
+                                Value="Transparent"/>
+                        </Trigger>
+
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+
+
+        <!-- Строки -->
+        <Setter Property="RowStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type DataGridRow}">
+
+                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                    <Setter Property="BorderBrush"
+                        Value="{DynamicResource BorderColor}"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Setter Property="Background" Value="Transparent"/>
+
+                    <Style.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background"
+                                Value="#F0EFE8"/>
+                        </Trigger>
+
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background"
+                                Value="#E7EBE4"/>
+                            <Setter Property="Foreground"
+                                Value="{DynamicResource TextColor}"/>
+                        </Trigger>
+
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+</ResourceDictionary>
