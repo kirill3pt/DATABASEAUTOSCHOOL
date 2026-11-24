@@ -63,11 +63,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Interfaces\AddInstructorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Interfaces\AddPaymentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Interfaces\AddStudentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaces\EditInstructorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaces\InvitationCodeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -93,21 +105,35 @@
     <Compile Include="Classes\GroupService.cs" />
     <Compile Include="Classes\IAUTH.cs" />
     <Compile Include="Classes\ILOGGER.cs" />
+    <Compile Include="Classes\InstructorDashboardServices.cs" />
+    <Compile Include="Classes\InstructorInvitationService.cs" />
+    <Compile Include="Classes\InstructorServices.cs" />
+    <Compile Include="Classes\LessonService.cs" />
     <Compile Include="Classes\LOGGER.cs" />
     <Compile Include="Classes\PasswordHasher.cs" />
     <Compile Include="Classes\PaymentService.cs" />
     <Compile Include="Classes\StudentService.cs" />
+    <Compile Include="Classes\UserService.cs" />
     <Compile Include="Interfaces\AddCarWindow.xaml.cs">
       <DependentUpon>AddCarWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\AddGroupWindow.xaml.cs">
       <DependentUpon>AddGroupWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\AddInstructorWindow.xaml.cs">
+      <DependentUpon>AddInstructorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\AddPaymentWindow.xaml.cs">
       <DependentUpon>AddPaymentWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\AddStudentWindow.xaml.cs">
       <DependentUpon>AddStudentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\EditInstructorWindow.xaml.cs">
+      <DependentUpon>EditInstructorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\InvitationCodeWindow.xaml.cs">
+      <DependentUpon>InvitationCodeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
@@ -118,12 +144,19 @@
     <Compile Include="Interfaces\ModuleInstructorWindow.xaml.cs">
       <DependentUpon>ModuleInstructorWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Interfaces\RegisterInstructionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Interfaces\StudentPaymentsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\RegisterInstructionWindow.xaml.cs">
+      <DependentUpon>RegisterInstructionWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\StudentPaymentsWindow.xaml.cs">
       <DependentUpon>StudentPaymentsWindow.xaml</DependentUpon>
     </Compile>

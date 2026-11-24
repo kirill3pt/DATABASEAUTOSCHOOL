@@ -1,4 +1,6 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace DATABASEAUTOSCHOOL.Classes
 {
@@ -6,6 +8,19 @@ namespace DATABASEAUTOSCHOOL.Classes
     {
         public bool Authenticate(string role, string login, string password)
         {
+            int instructorId;
+
+            return Authenticate(role, login, password, out instructorId);
+        }
+
+        public bool Authenticate(
+            string role,
+            string login,
+            string password,
+            out int instructorId)
+        {
+            instructorId = -1;
+
             if (string.IsNullOrWhiteSpace(role) ||
                 string.IsNullOrWhiteSpace(login) ||
                 string.IsNullOrEmpty(password))
@@ -16,24 +31,37 @@ namespace DATABASEAUTOSCHOOL.Classes
                 connection.Open();
 
                 string query = @"
-                    SELECT PasswordHash
-                    FROM Users
-                    WHERE Login = @Login AND Role = @Role";
+                    SELECT PasswordHash, InstructorID
+                    FROM dbo.Users
+                    WHERE Login = @Login
+                      AND Role = @Role
+                      AND IsActive = 1";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@Login", login);
-                    command.Parameters.AddWithValue("@Role", role);
+                    command.Parameters.Add("@Login", SqlDbType.NVarChar, 100).Value = login;
+                    command.Parameters.Add("@Role", SqlDbType.NVarChar, 60).Value = role;
 
-                    object result = command.ExecuteScalar();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (!reader.Read())
+                            return false;
 
-                    if (result == null || result == System.DBNull.Value)
-                        return false;
+                        string passwordHash = reader["PasswordHash"].ToString();
 
-                    return PasswordHasher.VerifyHash(
-                        password,
-                        result.ToString()
-                    );
+                        if (!PasswordHasher.VerifyHash(password, passwordHash))
+                            return false;
+
+                        if (role == "Инструктор")
+                        {
+                            if (reader["InstructorID"] == DBNull.Value)
+                                return false;
+
+                            instructorId = Convert.ToInt32(reader["InstructorID"]);
+                        }
+
+                        return true;
+                    }
                 }
             }
         }

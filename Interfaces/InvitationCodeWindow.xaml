@@ -1,0 +1,90 @@
+﻿<Window x:Class="DATABASEAUTOSCHOOL.Interfaces.InvitationCodeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Приглашение инструктора"
+        Width="480"
+        Height="300"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource BackgroundColor}"
+        FontFamily="Segoe UI">
+
+    <Window.Resources>
+        <Style x:Key="AdminActionButtonStyle"
+       TargetType="{x:Type Button}"
+       BasedOn="{StaticResource AccentButtonStyle}">
+
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="17,8"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+
+        </Style>
+        <!-- Светлая кнопка -->
+        <Style x:Key="LightActionButtonStyle"
+       TargetType="{x:Type Button}"
+       BasedOn="{StaticResource SecondaryButtonStyle}">
+
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="17,8"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Background"
+            Value="{DynamicResource MutedSurfaceColor}"/>
+
+        </Style>
+
+    </Window.Resources>
+    <Grid Margin="28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Приглашение создано"
+                   FontSize="23"
+                   FontWeight="SemiBold"
+                   Foreground="{DynamicResource TextColor}"/>
+
+        <TextBlock Grid.Row="1"
+                   Text="Передайте этот код инструктору для регистрации. Код действителен в течение 24 часов."
+                   TextWrapping="Wrap"
+                   FontSize="13"
+                   Foreground="{DynamicResource SecondaryTextColor}"
+                   Margin="0,10,0,18"/>
+
+        <Border Grid.Row="2"
+                Background="{DynamicResource InputBackgroundColor}"
+                BorderBrush="{DynamicResource BorderColor}"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="12">
+
+            <TextBox x:Name="InvitationCodeBox"
+                     IsReadOnly="True"
+                     BorderThickness="0"
+                     Background="Transparent"
+                     Foreground="{DynamicResource TextColor}"
+                     FontSize="16"
+                     FontWeight="SemiBold"
+                     TextAlignment="Center"
+                     VerticalContentAlignment="Center"/>
+        </Border>
+
+        <StackPanel Grid.Row="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom">
+
+            <Button Content="Копировать"
+                    Style="{StaticResource AdminActionButtonStyle}"
+                    Click="Copy_Click"
+                    Margin="0,0,8,0"/>
+
+            <Button Content="Закрыть"
+                    Style="{StaticResource LightActionButtonStyle}"
+                    Click="Close_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

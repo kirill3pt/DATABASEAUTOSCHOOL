@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using DATABASEAUTOSCHOOL.Classes;
+using System;
+using System.Data;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -6,9 +9,14 @@ namespace DATABASEAUTOSCHOOL.Interfaces
 {
     public partial class ModuleInstructorWindow : Window
     {
-        public ModuleInstructorWindow()
+        private readonly int instructorId;
+        private readonly InstructorDashboardService dashboardService = new InstructorDashboardService();
+        public ModuleInstructorWindow(int instructorId)
         {
             InitializeComponent();
+
+            this.instructorId = instructorId;
+
             Dashboard_Click(null, null);
         }
 
@@ -47,6 +55,8 @@ namespace DATABASEAUTOSCHOOL.Interfaces
 
             DashboardPanel.Visibility = Visibility.Visible;
             SectionPanel.Visibility = Visibility.Collapsed;
+
+            LoadDashboardStats();
         }
 
         // Переключение разделов
@@ -106,6 +116,30 @@ namespace DATABASEAUTOSCHOOL.Interfaces
                 loginWindow.Show();
 
                 Close();
+            }
+        }
+        private void LoadDashboardStats()
+        {
+            try
+            {
+                DataTable stats = dashboardService.GetDashboardStats(instructorId);
+
+                if (stats.Rows.Count > 0)
+                {
+                    StudentsCountText.Text =
+                        stats.Rows[0]["StudentCount"].ToString();
+
+                    LessonsCountText.Text =
+                        stats.Rows[0]["LessonCount"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Не удалось загрузить статистику.\n\n" + ex.Message,
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
         }
     }

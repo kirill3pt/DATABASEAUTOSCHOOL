@@ -1186,6 +1186,283 @@
                     </Border>
 
                 </Grid>
+
+                <!--/таблица инструктора-->
+
+                <Grid x:Name="InstructorsPanel" Visibility="Collapsed">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Заголовок -->
+                    <StackPanel Grid.Row="0" Margin="0,0,0,22">
+                        <TextBlock Text="Инструкторы"
+                   FontSize="28"
+                   FontWeight="SemiBold"
+                   Foreground="{DynamicResource TextColor}"/>
+
+                        <TextBlock Text="Управление инструкторами автошколы"
+                   FontSize="14"
+                   Foreground="{DynamicResource SecondaryTextColor}"
+                   Margin="0,7,0,0"/>
+                    </StackPanel>
+
+                    <!-- Поиск и основные действия -->
+                    <Grid Grid.Row="1" Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox x:Name="InstructorSearchBox"
+                 Height="42"
+                 VerticalContentAlignment="Center"
+                 Padding="12,0"
+                 FontSize="14"
+                 Background="{DynamicResource InputBackgroundColor}"
+                 Foreground="{DynamicResource TextColor}"
+                 BorderBrush="{DynamicResource BorderColor}"
+                 TextChanged="InstructorSearchBox_TextChanged"/>
+
+                        <StackPanel Grid.Column="1"
+                    Orientation="Horizontal"
+                    Margin="12,0,0,0"
+                    VerticalAlignment="Center">
+
+                            <Button Content="Добавить"
+                    Style="{StaticResource AdminActionButtonStyle}"
+                    Click="AddInstructor_Click"
+                    Margin="0,0,8,0"/>
+
+                            <Button Content="Изменить"
+                    Style="{StaticResource LightActionButtonStyle}"
+                    Click="EditInstructor_Click"
+                    Margin="0,0,8,0"/>
+
+                            <Button Content="Удалить"
+                    Style="{StaticResource DeleteActionButtonStyle}"
+                    Click="DeleteInstructors_Click"
+                    Margin="0,0,8,0"/>
+
+                            <Button Content="Обновить"
+                    Style="{StaticResource LightActionButtonStyle}"
+                    Click="RefreshInstructors_Click"/>
+
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Управление учётными записями -->
+                    <Border Grid.Row="2"
+            Background="{DynamicResource SurfaceColor}"
+            BorderBrush="{DynamicResource BorderColor}"
+            BorderThickness="1"
+            CornerRadius="12"
+            Padding="16"
+            Margin="0,0,0,16">
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="0" Margin="0,0,0,12">
+                                <TextBlock Text="Управление доступом"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextColor}"/>
+
+                                <TextBlock Text="Действия с учётной записью выбранного инструктора"
+                           FontSize="12"
+                           Foreground="{DynamicResource SecondaryTextColor}"
+                           Margin="0,4,0,0"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1"
+                        Orientation="Horizontal">
+
+                                <Button Content="Создать приглашение"
+                        Style="{StaticResource AdminActionButtonStyle}"
+                        Click="CreateInvitation_Click"
+                        Margin="0,0,8,0"/>
+
+                                <Button Content="Изменить доступ"
+                        Style="{StaticResource LightActionButtonStyle}"
+                        Click="ToggleInstructorAccount_Click"
+                        Margin="0,0,8,0"/>
+
+                                <Button Content="Удалить учётную запись"
+                        Style="{StaticResource DeleteActionButtonStyle}"
+                        Click="DeleteInstructorAccount_Click"/>
+
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- Таблица инструкторов -->
+                    <DataGrid x:Name="InstructorsDataGrid"
+              Grid.Row="3"
+              Style="{StaticResource ModernDataGridStyle}"
+              SelectionMode="Extended"
+              SelectionUnit="FullRow"
+              IsReadOnly="True"
+              AutoGenerateColumns="False"
+              CanUserSortColumns="True"
+              CanUserReorderColumns="True">
+
+                        <DataGrid.Columns>
+
+                            <DataGridTextColumn Header="ID"
+                                Binding="{Binding [ID]}"
+                                Width="60"/>
+
+                            <DataGridTextColumn Header="Фамилия"
+                                Binding="{Binding [Фамилия]}"
+                                Width="1.2*"/>
+
+                            <DataGridTextColumn Header="Имя"
+                                Binding="{Binding [Имя]}"
+                                Width="1.2*"/>
+
+                            <DataGridTextColumn Header="Отчество"
+                                Binding="{Binding [Отчество]}"
+                                Width="1.2*"/>
+
+                            <DataGridTextColumn Header="Телефон"
+                                Binding="{Binding [Телефон]}"
+                                Width="1.2*"/>
+
+                            <DataGridTextColumn Header="Регистрация"
+                                Binding="{Binding [Регистрация]}"
+                                Width="1.3*"/>
+
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+                </Grid>
+
+                <Grid x:Name="LessonsPanel" Visibility="Collapsed">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Заголовок -->
+                    <StackPanel Grid.Row="0" Margin="0,0,0,22">
+
+                        <TextBlock Text="Занятия"
+                   FontSize="28"
+                   FontWeight="SemiBold"
+                   Foreground="{DynamicResource TextColor}"/>
+
+                        <TextBlock Text="Управление расписанием занятий автошколы"
+                   FontSize="14"
+                   Foreground="{DynamicResource SecondaryTextColor}"
+                   Margin="0,7,0,0"/>
+
+                    </StackPanel>
+
+                    <!-- Поиск и действия -->
+                    <Grid Grid.Row="1" Margin="0,0,0,16">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox x:Name="LessonSearchBox"
+                 Height="42"
+                 VerticalContentAlignment="Center"
+                 Padding="12,0"
+                 FontSize="14"
+                 Background="{DynamicResource InputBackgroundColor}"
+                 Foreground="{DynamicResource TextColor}"
+                 BorderBrush="{DynamicResource BorderColor}"
+                 TextChanged="LessonSearchBox_TextChanged"/>
+
+                        <StackPanel Grid.Column="1"
+                    Orientation="Horizontal"
+                    Margin="12,0,0,0"
+                    VerticalAlignment="Center">
+
+                            <Button Content="Добавить"
+                    Style="{StaticResource AdminActionButtonStyle}"
+                    Click="AddLesson_Click"
+                    Margin="0,0,8,0"/>
+
+                            <Button Content="Изменить"
+                    Style="{StaticResource LightActionButtonStyle}"
+                    Click="EditLesson_Click"
+                    Margin="0,0,8,0"/>
+
+                            <Button Content="Удалить"
+                    Style="{StaticResource DeleteActionButtonStyle}"
+                    Click="DeleteLessons_Click"
+                    Margin="0,0,8,0"/>
+
+                            <Button Content="Обновить"
+                    Style="{StaticResource LightActionButtonStyle}"
+                    Click="RefreshLessons_Click"/>
+
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Таблица занятий -->
+                    <DataGrid x:Name="LessonsDataGrid"
+              Grid.Row="2"
+              Style="{StaticResource ModernDataGridStyle}"
+              SelectionMode="Extended"
+              SelectionUnit="FullRow"
+              IsReadOnly="True"
+              AutoGenerateColumns="False"
+              CanUserSortColumns="True"
+              CanUserReorderColumns="True">
+
+                        <DataGrid.Columns>
+
+                            <DataGridTextColumn Header="ID"
+                                Binding="{Binding [ID]}"
+                                Width="55"/>
+
+                            <DataGridTextColumn Header="Дата"
+                                Binding="{Binding [Дата], StringFormat={}{0:dd.MM.yyyy}}"
+                                Width="110"/>
+
+                            <DataGridTextColumn Header="Время"
+                                Binding="{Binding [Время]}"
+                                Width="85"/>
+
+                            <DataGridTextColumn Header="Ученик"
+                                Binding="{Binding [Ученик]}"
+                                Width="1.3*"/>
+
+                            <DataGridTextColumn Header="Инструктор"
+                                Binding="{Binding [Инструктор]}"
+                                Width="1.3*"/>
+
+                            <DataGridTextColumn Header="Автомобиль"
+                                Binding="{Binding [Автомобиль]}"
+                                Width="1.2*"/>
+
+                            <DataGridTextColumn Header="Статус"
+                                Binding="{Binding [Статус]}"
+                                Width="130"/>
+
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+                </Grid>
+
+
+
             </Grid>
         </Grid>
     </Grid>

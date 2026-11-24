@@ -341,8 +341,8 @@
                                                FontSize="10"
                                                FontWeight="Bold"
                                                Foreground="{DynamicResource SecondaryTextColor}"/>
-
-                                    <TextBlock Text="—"
+                                    <TextBlock x:Name="StudentsCountText"
+                                               Text="0"
                                                FontSize="32"
                                                FontWeight="SemiBold"
                                                Foreground="{DynamicResource TextColor}"
@@ -366,7 +366,8 @@
                                                FontWeight="Bold"
                                                Foreground="{DynamicResource SecondaryTextColor}"/>
 
-                                    <TextBlock Text="—"
+                                    <TextBlock x:Name="LessonsCountText"
+                                               Text="0"
                                                FontSize="32"
                                                FontWeight="SemiBold"
                                                Foreground="{DynamicResource TextColor}"

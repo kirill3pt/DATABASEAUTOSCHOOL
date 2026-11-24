@@ -8,7 +8,7 @@ namespace DATABASEAUTOSCHOOL.Interfaces
     public partial class LoginWindow : Window
     {
         private readonly AUTH auth = new AUTH();
-
+        private readonly LOGGER logger = new LOGGER();
         public LoginWindow()
         {
             InitializeComponent();
@@ -35,22 +35,36 @@ namespace DATABASEAUTOSCHOOL.Interfaces
 
             try
             {
-                if (auth.Authenticate(role, login, password))
+                int instructorId;
+
+                if (auth.Authenticate(role, login, password, out instructorId))
                 {
                     if (role == "Администратор")
                     {
                         ModuleAdminWindow adminWindow = new ModuleAdminWindow();
                         adminWindow.Show();
+
+                        logger.LOG($"Авторизация. Администратор {login} вошёл в систему.");
                     }
                     else if (role == "Инструктор")
                     {
                         ModuleInstructorWindow instructorWindow =
-                            new ModuleInstructorWindow();
+                            new ModuleInstructorWindow(instructorId);
 
                         instructorWindow.Show();
+
+                        logger.LOG($"Авторизация. Инструктор {login} вошёл в систему.");
                     }
 
                     this.Close();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Неверный логин или пароль.",
+                        "Авторизация",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
                 }
             }
             catch (Exception ex)
@@ -62,10 +76,11 @@ namespace DATABASEAUTOSCHOOL.Interfaces
                     MessageBoxImage.Error);
             }
         }
-
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Регистрация инструктора будет подключена позже.");
+            RegisterInstructorWindow window = new RegisterInstructorWindow();
+            window.Owner = this;
+            window.ShowDialog();
         }
     }
 }

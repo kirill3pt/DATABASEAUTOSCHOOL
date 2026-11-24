@@ -15,6 +15,10 @@ namespace DATABASEAUTOSCHOOL.Interfaces
         private readonly StudentService studentService = new StudentService();
         private readonly GroupService groupService = new GroupService();
         private readonly PaymentService paymentService = new PaymentService();
+        private readonly InstructorService instructorService = new InstructorService();
+        private readonly InstructorInvitationService invitationService = new InstructorInvitationService();
+        private readonly UserService userService = new UserService();
+        private readonly LessonService lessonService = new LessonService();
         private readonly LOGGER logger = new LOGGER();
 
         public ModuleAdminWindow()
@@ -71,6 +75,7 @@ namespace DATABASEAUTOSCHOOL.Interfaces
             CarsPanel.Visibility = Visibility.Collapsed;
             StudentsPanel.Visibility = Visibility.Collapsed;
             PaymentsPanel.Visibility = Visibility.Collapsed;
+            InstructorsPanel.Visibility = Visibility.Collapsed;
         }
 
         private void ShowSection(string title, string description, Button activeButton)
@@ -82,7 +87,7 @@ namespace DATABASEAUTOSCHOOL.Interfaces
             CarsPanel.Visibility = Visibility.Collapsed;
             StudentsPanel.Visibility = Visibility.Collapsed;
             PaymentsPanel.Visibility = Visibility.Collapsed;
-
+            InstructorsPanel.Visibility = Visibility.Collapsed;
             SectionTitle.Text = title;
             SectionDescription.Text = description;
         }
@@ -118,7 +123,7 @@ namespace DATABASEAUTOSCHOOL.Interfaces
             StudentsPanel.Visibility = Visibility.Collapsed;
             PaymentsPanel.Visibility = Visibility.Collapsed;
             GroupsPanel.Visibility = Visibility.Visible;
-
+            InstructorsPanel.Visibility = Visibility.Collapsed;
             LoadGroups();
         }
 
@@ -323,17 +328,43 @@ namespace DATABASEAUTOSCHOOL.Interfaces
             CarsPanel.Visibility = Visibility.Collapsed;
             PaymentsPanel.Visibility = Visibility.Collapsed;
             StudentsPanel.Visibility = Visibility.Visible;
-
+            InstructorsPanel.Visibility = Visibility.Collapsed;
             LoadStudents();
         }
 
         // Инструкторы
         private void Instructors_Click(object sender, RoutedEventArgs e)
         {
-            ShowSection(
-                "Инструкторы",
-                "Управление инструкторами, их контактными данными и регистрацией.",
-                InstructorsButton);
+            DashboardPanel.Visibility = Visibility.Collapsed;
+            SectionPanel.Visibility = Visibility.Collapsed;
+            CarsPanel.Visibility = Visibility.Collapsed;
+            StudentsPanel.Visibility = Visibility.Collapsed;
+            GroupsPanel.Visibility = Visibility.Collapsed;
+            PaymentsPanel.Visibility = Visibility.Collapsed;
+            InstructorsPanel.Visibility = Visibility.Visible;
+
+            SetActiveButton(InstructorsButton);
+
+            LoadInstructors();
+
+            logger.LOG("Открыт раздел инструкторов.");
+        }
+        private void Lessons_Click(object sender, RoutedEventArgs e)
+        {
+            SetActiveButton(LessonsButton);
+
+            DashboardPanel.Visibility = Visibility.Collapsed;
+            SectionPanel.Visibility = Visibility.Collapsed;
+
+            CarsPanel.Visibility = Visibility.Collapsed;
+            StudentsPanel.Visibility = Visibility.Collapsed;
+            GroupsPanel.Visibility = Visibility.Collapsed;
+            PaymentsPanel.Visibility = Visibility.Collapsed;
+            InstructorsPanel.Visibility = Visibility.Collapsed;
+
+            LessonsPanel.Visibility = Visibility.Visible;
+
+            LoadLessons();
         }
 
         // Открытие окна добавления автомобиля
@@ -478,18 +509,13 @@ namespace DATABASEAUTOSCHOOL.Interfaces
             PaymentsPanel.Visibility = Visibility.Collapsed;
             CarsPanel.Visibility = Visibility.Visible;
             StudentsPanel.Visibility = Visibility.Collapsed;
+            InstructorsPanel.Visibility = Visibility.Collapsed;
 
             LoadCars();
         }
 
         // Расписание
-        private void Lessons_Click(object sender, RoutedEventArgs e)
-        {
-            ShowSection(
-                "Расписание",
-                "Просмотр занятий, управление расписанием и изменение статусов занятий.",
-                LessonsButton);
-        }
+
 
         // Отчёты
         private void Reports_Click(object sender, RoutedEventArgs e)
@@ -704,5 +730,350 @@ namespace DATABASEAUTOSCHOOL.Interfaces
                 "Форма изменения платежа будет подключена следующим шагом.");
         }
 
+        private void LoadInstructors(string searchText = "")
+        {
+            try
+            {
+                InstructorsDataGrid.ItemsSource =
+                    instructorService.GetInstructors(searchText).DefaultView;
+            }
+            catch (Exception ex)
+            {
+                logger.LOG("Ошибка загрузки инструкторов: " + ex.Message);
+
+                MessageBox.Show(
+                    "Не удалось загрузить список инструкторов.\n\n" + ex.Message,
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+
+        private void InstructorSearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (IsInitialized)
+                LoadInstructors(InstructorSearchBox.Text.Trim());
+        }
+
+        private void RefreshInstructors_Click(object sender, RoutedEventArgs e)
+        {
+            InstructorSearchBox.Clear();
+            LoadInstructors("");
+
+            logger.LOG("Список инструкторов обновлён.");
+        }
+
+        private void DeleteInstructors_Click(object sender, RoutedEventArgs e)
+        {
+            List<int> ids = new List<int>();
+
+            foreach (DataRowView row in InstructorsDataGrid.SelectedItems)
+            {
+                ids.Add(Convert.ToInt32(row["ID"]));
+            }
+
+            if (ids.Count == 0)
+            {
+                MessageBox.Show(
+                    "Выберите инструкторов для удаления.",
+                    "Удаление",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+                return;
+            }
+
+            MessageBoxResult result = MessageBox.Show(
+                "Вы действительно хотите удалить выбранных инструкторов?",
+                "Подтверждение удаления",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result != MessageBoxResult.Yes)
+                return;
+
+            try
+            {
+                instructorService.DeleteInstructors(ids);
+                LoadInstructors(InstructorSearchBox.Text.Trim());
+
+                logger.LOG("Удалены инструкторы. Количество: " + ids.Count);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Не удалось удалить инструкторов.\n\n" + ex.Message,
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+        private void AddInstructor_Click(object sender, RoutedEventArgs e)
+        {
+            AddInstructorWindow window = new AddInstructorWindow();
+            window.Owner = this;
+
+            if (window.ShowDialog() == true)
+            {
+                LoadInstructors(InstructorSearchBox.Text.Trim());
+            }
+        }
+        private void EditInstructor_Click(object sender, RoutedEventArgs e)
+        {
+            if (InstructorsDataGrid.SelectedItem == null)
+            {
+                MessageBox.Show(
+                    "Выберите инструктора для редактирования.",
+                    "Редактирование",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
+            }
+
+            DataRowView selectedRow = InstructorsDataGrid.SelectedItem as DataRowView;
+
+            if (selectedRow == null)
+                return;
+
+            int instructorId = Convert.ToInt32(selectedRow["ID"]);
+
+            EditInstructorWindow window = new EditInstructorWindow(instructorId);
+            window.Owner = this;
+
+            if (window.ShowDialog() == true)
+            {
+                LoadInstructors(InstructorSearchBox.Text.Trim());
+            }
+        }
+
+        private void CreateInvitation_Click(object sender, RoutedEventArgs e)
+        {
+            if (InstructorsDataGrid.SelectedItems.Count != 1)
+            {
+                MessageBox.Show(
+                    "Выберите одного инструктора.",
+                    "Приглашение",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
+            }
+
+            DataRowView selectedRow = InstructorsDataGrid.SelectedItem as DataRowView;
+
+            if (selectedRow == null)
+                return;
+
+            string registrationStatus = Convert.ToString(selectedRow["Регистрация"]);
+
+            if (registrationStatus == "Зарегистрирован")
+            {
+                MessageBox.Show(
+                    "У этого инструктора уже есть учётная запись.",
+                    "Приглашение",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+                return;
+            }
+
+            int instructorId = Convert.ToInt32(selectedRow["ID"]);
+
+            try
+            {
+                string invitationCode = invitationService.CreateInvitation(instructorId);
+
+                InvitationCodeWindow window = new InvitationCodeWindow(invitationCode);
+                window.Owner = this;
+                window.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Ошибка создания приглашения",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+        private void ToggleInstructorAccount_Click(object sender, RoutedEventArgs e)
+        {
+            DataRowView selectedInstructor = InstructorsDataGrid.SelectedItem as DataRowView;
+
+            if (selectedInstructor == null)
+            {
+                MessageBox.Show(
+                    "Выберите инструктора.",
+                    "Управление учётной записью",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+                return;
+            }
+
+            int instructorId = Convert.ToInt32(selectedInstructor["ID"]);
+
+            try
+            {
+                DataRow account = userService.GetAccountByInstructorId(instructorId);
+
+                if (account == null)
+                {
+                    MessageBox.Show(
+                        "У этого инструктора нет учётной записи. Сначала создайте приглашение.",
+                        "Управление учётной записью",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+                    return;
+                }
+
+                bool isActive = Convert.ToBoolean(account["IsActive"]);
+                bool newStatus = !isActive;
+
+                string action = newStatus ? "восстановить доступ" : "заблокировать";
+
+                MessageBoxResult result = MessageBox.Show(
+                    "Вы действительно хотите " + action +
+                    " для учётной записи \"" + account["Login"] + "\"?",
+                    "Подтверждение действия",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result != MessageBoxResult.Yes)
+                    return;
+
+                userService.SetAccountActive(instructorId, newStatus);
+
+                MessageBox.Show(
+                    newStatus
+                        ? "Доступ к учётной записи восстановлен."
+                        : "Учётная запись заблокирована.",
+                    "Готово",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+
+                RefreshInstructors_Click(null, null);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Не удалось изменить состояние учётной записи.\n" + ex.Message,
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+
+
+        private void DeleteInstructorAccount_Click(object sender, RoutedEventArgs e)
+        {
+            DataRowView selectedInstructor = InstructorsDataGrid.SelectedItem as DataRowView;
+
+            if (selectedInstructor == null)
+            {
+                MessageBox.Show(
+                    "Выберите инструктора.",
+                    "Удаление учётной записи",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+                return;
+            }
+
+            int instructorId = Convert.ToInt32(selectedInstructor["ID"]);
+
+            try
+            {
+                DataRow account = userService.GetAccountByInstructorId(instructorId);
+
+                if (account == null)
+                {
+                    MessageBox.Show(
+                        "У выбранного инструктора нет учётной записи.",
+                        "Удаление учётной записи",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+                    return;
+                }
+
+                MessageBoxResult result = MessageBox.Show(
+                    "Удалить учётную запись \"" + account["Login"] + "\"?\n\n" +
+                    "Профиль инструктора и история его занятий сохранятся.\n" +
+                    "Для повторного входа потребуется новое приглашение.",
+                    "Подтверждение удаления",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+
+                if (result != MessageBoxResult.Yes)
+                    return;
+
+                userService.DeleteAccount(instructorId);
+
+                MessageBox.Show(
+                    "Учётная запись удалена. Профиль инструктора сохранён.",
+                    "Готово",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+
+                RefreshInstructors_Click(null, null);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Не удалось удалить учётную запись.\n" + ex.Message,
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+        private void LoadLessons(string searchText = "")
+        {
+            try
+            {
+                LessonsDataGrid.ItemsSource =
+                    lessonService.GetLessons(searchText).DefaultView;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Не удалось загрузить занятия.\n\n" + ex.Message,
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+        private void LessonSearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            LoadLessons(LessonSearchBox.Text);
+        }
+
+        private void RefreshLessons_Click(
+            object sender,
+            RoutedEventArgs e)
+        {
+            LessonSearchBox.Clear();
+            LoadLessons();
+        }
+        private void AddLesson_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(
+                "Форма добавления занятия будет подключена следующим этапом.",
+                "Занятия",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
+        }
+
+        private void EditLesson_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(
+                "Форма редактирования занятия будет подключена следующим этапом.",
+                "Занятия",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
+        }
+
+        private void DeleteLessons_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(
+                "Удаление занятий будет подключено следующим этапом.",
+                "Занятия",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
+        }
     }
 }

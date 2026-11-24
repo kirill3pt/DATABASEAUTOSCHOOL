@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace DATABASEAUTOSCHOOL.Classes
 {
-    internal interface IAUTH
+    public interface IAUTH
     {
         bool Authenticate(string role, string login, string password);
+
+        bool Authenticate(
+            string role,
+            string login,
+            string password,
+            out int instructorId);
     }
 }

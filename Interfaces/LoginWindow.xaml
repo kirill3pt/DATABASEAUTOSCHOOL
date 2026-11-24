@@ -51,13 +51,13 @@
                         VerticalAlignment="Center"
                         Margin="48,0,42,0">
 
-                <TextBlock Text="Управляй"
+                <TextBlock Text="Панель"
                            FontSize="43"
                            FontWeight="SemiBold"
                            Foreground="#F3F1EB"
                            LineHeight="49"/>
 
-                <TextBlock Text="своим будущим."
+                <TextBlock Text="авторизации"
                            FontSize="43"
                            FontWeight="SemiBold"
                            Foreground="#A8B5A5"
@@ -134,13 +134,6 @@
                 <TextBlock Text="ЛИЧНЫЙ КАБИНЕТ"
                            FontSize="10"
                            FontWeight="Bold"
-                           Foreground="{DynamicResource SecondaryTextColor}"
-                           VerticalAlignment="Center"/>
-
-                <TextBlock Grid.Column="1"
-                           Text="01 / 01"
-                           FontSize="10"
-                           FontWeight="SemiBold"
                            Foreground="{DynamicResource SecondaryTextColor}"
                            VerticalAlignment="Center"/>
             </Grid>
@@ -227,14 +220,6 @@
                         Click="RegisterButton_Click"
                         Cursor="Hand"/>
             </StackPanel>
-
-            <TextBlock Grid.Row="2"
-                        Text="АВТОШКОЛА"
-                        FontSize="9"
-                        FontWeight="SemiBold"
-                        Foreground="{DynamicResource SecondaryTextColor}"
-                        HorizontalAlignment="Center"
-                        Margin="0,0,0,30"/>
         </Grid>
     </Grid>
 </Window>
