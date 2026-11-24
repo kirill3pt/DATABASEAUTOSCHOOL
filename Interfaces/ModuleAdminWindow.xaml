@@ -7,29 +7,33 @@
         MinHeight="650"
         MinWidth="1000"
         WindowStartupLocation="CenterScreen"
-        Background="{StaticResource BackgroundColor}"
+        Background="{DynamicResource BackgroundColor}"
+        Foreground="{DynamicResource TextColor}"
         FontFamily="Segoe UI">
 
     <Window.Resources>
 
-        <Style x:Key="NavButtonStyle" TargetType="Button">
+        <!-- Кнопки бокового меню -->
+        <Style x:Key="NavButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource {x:Type Button}}">
+
             <Setter Property="Height" Value="46"/>
             <Setter Property="Margin" Value="0,3"/>
             <Setter Property="Padding" Value="14,0"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="Foreground" Value="#C5D0E3"/>
+            <Setter Property="Foreground" Value="#D7DED8"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="Medium"/>
-            <Setter Property="Cursor" Value="Hand"/>
 
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="buttonBorder"
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="ButtonBorder"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="9"
+                                CornerRadius="6"
                                 Padding="{TemplateBinding Padding}">
 
                             <ContentPresenter
@@ -39,48 +43,111 @@
                         </Border>
 
                         <ControlTemplate.Triggers>
+
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="buttonBorder"
+                                <Setter TargetName="ButtonBorder"
                                         Property="Background"
-                                        Value="#344568"/>
+                                        Value="#3B4742"/>
                             </Trigger>
 
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="buttonBorder"
+                                <Setter TargetName="ButtonBorder"
                                         Property="Background"
-                                        Value="#4169E1"/>
+                                        Value="#536158"/>
                             </Trigger>
 
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" Value="0.5"/>
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Opacity"
+                                        Value="0.4"/>
                             </Trigger>
+
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <Style x:Key="StatCardStyle" TargetType="Border">
-            <Setter Property="Background" Value="{StaticResource SurfaceColor}"/>
-            <Setter Property="CornerRadius" Value="14"/>
+
+        <!-- Карточки статистики -->
+        <Style x:Key="StatCardStyle"
+               TargetType="{x:Type Border}">
+
+            <Setter Property="Background"
+                    Value="{DynamicResource SurfaceColor}"/>
+            <Setter Property="CornerRadius" Value="8"/>
             <Setter Property="Padding" Value="22"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="BorderBrush"
+                    Value="{DynamicResource BorderColor}"/>
             <Setter Property="BorderThickness" Value="1"/>
+
         </Style>
 
-        <Style x:Key="ModernDataGridStyle" TargetType="{x:Type DataGrid}">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="Foreground" Value="#263550"/>
+
+        <!-- Основная кнопка действий -->
+        <Style x:Key="AdminActionButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource AccentButtonStyle}">
+
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="17,8"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+
+        </Style>
+
+
+        <!-- Кнопка удаления -->
+        <Style x:Key="DeleteActionButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource AccentButtonStyle}">
+
+            <Setter Property="Background"
+                    Value="{DynamicResource DangerColor}"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="17,8"/>
+            <Setter Property="FontSize" Value="12"/>
+
+        </Style>
+
+
+        <!-- Светлая кнопка -->
+        <Style x:Key="LightActionButtonStyle"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource SecondaryButtonStyle}">
+
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="17,8"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Background"
+                    Value="{DynamicResource MutedSurfaceColor}"/>
+
+        </Style>
+
+
+        <!-- Таблица -->
+        <Style x:Key="ModernDataGridStyle"
+               TargetType="{x:Type DataGrid}">
+
+            <Setter Property="Background"
+                    Value="{DynamicResource SurfaceColor}"/>
+            <Setter Property="Foreground"
+                    Value="{DynamicResource TextColor}"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="RowBackground" Value="White"/>
-            <Setter Property="AlternatingRowBackground" Value="#FAFBFE"/>
+            <Setter Property="RowBackground"
+                    Value="{DynamicResource SurfaceColor}"/>
+            <Setter Property="AlternatingRowBackground"
+                    Value="#F4F3EE"/>
             <Setter Property="AlternationCount" Value="2"/>
             <Setter Property="GridLinesVisibility" Value="Horizontal"/>
-            <Setter Property="HorizontalGridLinesBrush" Value="#EEF1F6"/>
-            <Setter Property="VerticalGridLinesBrush" Value="Transparent"/>
-            <Setter Property="RowHeight" Value="58"/>
-            <Setter Property="ColumnHeaderHeight" Value="48"/>
-            <Setter Property="FontFamily" Value="Segoe UI Variable"/>
+            <Setter Property="HorizontalGridLinesBrush"
+                    Value="{DynamicResource BorderColor}"/>
+            <Setter Property="VerticalGridLinesBrush"
+                    Value="Transparent"/>
+            <Setter Property="RowHeight" Value="56"/>
+            <Setter Property="ColumnHeaderHeight" Value="46"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="SelectionMode" Value="Single"/>
             <Setter Property="SelectionUnit" Value="FullRow"/>
@@ -91,17 +158,22 @@
             <Setter Property="AutoGenerateColumns" Value="False"/>
             <Setter Property="RowHeaderWidth" Value="0"/>
 
+            <!-- Заголовки столбцов -->
             <Setter Property="ColumnHeaderStyle">
                 <Setter.Value>
                     <Style TargetType="{x:Type DataGridColumnHeader}">
-                        <Setter Property="Background" Value="#F7F8FC"/>
-                        <Setter Property="Foreground" Value="#73809A"/>
-                        <Setter Property="FontFamily" Value="Segoe UI Variable"/>
-                        <Setter Property="FontSize" Value="12"/>
-                        <Setter Property="FontWeight" Value="SemiBold"/>
+
+                        <Setter Property="Background"
+                                Value="{DynamicResource MutedSurfaceColor}"/>
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource SecondaryTextColor}"/>
+                        <Setter Property="FontFamily" Value="Segoe UI"/>
+                        <Setter Property="FontSize" Value="11"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
                         <Setter Property="Padding" Value="16,0"/>
                         <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                        <Setter Property="BorderBrush" Value="#E9EDF4"/>
+                        <Setter Property="BorderBrush"
+                                Value="{DynamicResource BorderColor}"/>
                         <Setter Property="HorizontalContentAlignment" Value="Left"/>
                         <Setter Property="VerticalContentAlignment" Value="Center"/>
                         <Setter Property="Cursor" Value="Hand"/>
@@ -124,21 +196,29 @@
                         </Setter>
 
                         <Style.Triggers>
+
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#EFF3FC"/>
-                                <Setter Property="Foreground" Value="#4169E1"/>
+                                <Setter Property="Background"
+                                        Value="#EAE8E0"/>
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource TextColor}"/>
                             </Trigger>
+
                         </Style.Triggers>
                     </Style>
                 </Setter.Value>
             </Setter>
 
+
+            <!-- Ячейки -->
             <Setter Property="CellStyle">
                 <Setter.Value>
                     <Style TargetType="{x:Type DataGridCell}">
+
                         <Setter Property="Padding" Value="0"/>
                         <Setter Property="BorderThickness" Value="0"/>
-                        <Setter Property="Foreground" Value="#34415B"/>
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource TextColor}"/>
                         <Setter Property="Background" Value="Transparent"/>
                         <Setter Property="VerticalContentAlignment" Value="Center"/>
                         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -158,38 +238,54 @@
                         </Setter>
 
                         <Style.Triggers>
+
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Foreground" Value="#3156C5"/>
-                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource TextColor}"/>
+                                <Setter Property="Background"
+                                        Value="Transparent"/>
                             </Trigger>
+
                         </Style.Triggers>
                     </Style>
                 </Setter.Value>
             </Setter>
 
+
+            <!-- Строки -->
             <Setter Property="RowStyle">
                 <Setter.Value>
                     <Style TargetType="{x:Type DataGridRow}">
+
                         <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                        <Setter Property="BorderBrush" Value="#EEF1F6"/>
+                        <Setter Property="BorderBrush"
+                                Value="{DynamicResource BorderColor}"/>
                         <Setter Property="Cursor" Value="Hand"/>
+                        <Setter Property="Background" Value="Transparent"/>
 
                         <Style.Triggers>
+
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#F4F7FF"/>
+                                <Setter Property="Background"
+                                        Value="#F0EFE8"/>
                             </Trigger>
 
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="#EAF0FF"/>
-                                <Setter Property="Foreground" Value="#3156C5"/>
+                                <Setter Property="Background"
+                                        Value="#E7EBE4"/>
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource TextColor}"/>
                             </Trigger>
+
                         </Style.Triggers>
                     </Style>
                 </Setter.Value>
             </Setter>
+
         </Style>
 
     </Window.Resources>
+
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -197,160 +293,150 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+
         <!-- Боковое меню -->
-        <Border Grid.Column="0" Background="#202B46">
+        <Border Grid.Column="0"
+                Background="{DynamicResource ForestCharcoal}">
+
             <DockPanel Margin="20">
 
                 <!-- Нижняя часть меню -->
                 <StackPanel DockPanel.Dock="Bottom">
-                    <Border Height="1"
-                            Background="#3A4864"
-                            Margin="0,15,0,15"/>
 
-                    <Button Style="{StaticResource NavButtonStyle}"
-                            Click="Settings_Click">
+                    <Button x:Name="SettingsButton"
+                            Style="{StaticResource NavButtonStyle}"
+                            Click="Settings_Click" Cursor="Hand">
+
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="⚙"
-                                       Width="25"
-                                       FontSize="17"
-                                       Foreground="#C5D0E3"/>
-
                             <TextBlock Text="Настройки"
-                                       Foreground="#C5D0E3"/>
+                                       VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
                     <Button Style="{StaticResource NavButtonStyle}"
                             Click="About_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="ⓘ"
-                                       Width="25"
-                                       FontSize="17"
-                                       Foreground="#C5D0E3"/>
 
+                        <StackPanel Orientation="Horizontal">
                             <TextBlock Text="О программе"
-                                       Foreground="#C5D0E3"/>
+                                       VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
                     <Button Style="{StaticResource NavButtonStyle}"
-                            Foreground="#F08A8A"
+                            Foreground="#D99B8F"
                             Click="Logout_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="↪"
-                                       Width="25"
-                                       FontSize="17"
-                                       Foreground="#F08A8A"/>
 
+                        <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Выйти"
-                                       Foreground="#F08A8A"/>
+                                       VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
+
                 </StackPanel>
+
 
                 <!-- Верхняя часть меню -->
                 <StackPanel>
 
-                    <!-- Логотип приложения -->
-                    <StackPanel Margin="5,8,0,35">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="🚘"
-                                       FontSize="25"
-                                       Margin="0,0,9,0"
-                                       VerticalAlignment="Center"/>
+                    <!-- Название приложения -->
+                    <StackPanel Margin="5,8,0,38">
 
-                            <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="DRIVING SCHOOL"
-                                           Foreground="White"
-                                           FontSize="17"
-                                           FontWeight="Bold"/>
+                        <TextBlock Text="АВТОШКОЛА"
+                                   Foreground="#F3F1EB"
+                                   FontSize="17"
+                                   FontWeight="Bold"/>
 
-                                <TextBlock Text="ADMINISTRATION"
-                                           Foreground="#8999B8"
-                                           FontSize="9"/>
-                            </StackPanel>
-                        </StackPanel>
+                        <TextBlock Text="ПАНЕЛЬ УПРАВЛЕНИЯ"
+                                   Foreground="#A8B5A5"
+                                   FontSize="9"
+                                   FontWeight="SemiBold"
+                                   Margin="0,5,0,0"/>
+
                     </StackPanel>
 
-                    <!-- Основные разделы -->
+
+                    <!-- Главная -->
                     <TextBlock Text="ГЛАВНОЕ"
-                               Foreground="#7888A5"
-                               FontSize="10"
+                               Foreground="#A8B5A5"
+                               FontSize="16"
                                FontWeight="Bold"
                                Margin="10,0,0,10"/>
 
                     <Button x:Name="DashboardButton"
                             Style="{StaticResource NavButtonStyle}"
-                            Background="#4169E1"
-                            Foreground="White"
+                            Background="{DynamicResource Sage}"
+                            Foreground="{DynamicResource ForestCharcoal}"
                             Click="Dashboard_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="⌂"
-                                       Width="25"
-                                       FontSize="19"
-                                       Foreground="White"/>
 
+                        <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Главная"
-                                       Foreground="White"/>
+                                       VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
-
                     <!-- Управление данными -->
                     <TextBlock Text="УПРАВЛЕНИЕ"
-                               Foreground="#7888A5"
-                               FontSize="10"
+                               Foreground="#A8B5A5"
+                               FontSize="16"
                                FontWeight="Bold"
                                Margin="10,25,0,10"/>
 
                     <Button x:Name="StudentsButton"
                             Style="{StaticResource NavButtonStyle}"
                             Click="Students_Click">
+
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Ученики"
-                                       Foreground="#C5D0E3"/>
+                                       VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
                     <Button x:Name="InstructorsButton"
                             Style="{StaticResource NavButtonStyle}"
                             Click="Instructors_Click">
+
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Инструкторы"
-                                       Foreground="#C5D0E3"/>
+                                       VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
                     <Button x:Name="CarsButton"
                             Style="{StaticResource NavButtonStyle}"
                             Click="Cars_Click">
+
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Автомобили"
-                                       Foreground="#C5D0E3"/>
+                                       VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
                     <Button x:Name="LessonsButton"
                             Style="{StaticResource NavButtonStyle}"
                             Click="Lessons_Click">
+
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Расписание"
-                                       Foreground="#C5D0E3"/>
+                                       VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
+                    <Border Height="1"
+                            Background="#536158"
+                            Margin="0,0,0,0"/>
                     <!-- Дополнительные разделы -->
                     <TextBlock Text="ДОПОЛНИТЕЛЬНО"
-                               Foreground="#7888A5"
-                               FontSize="10"
+                               Foreground="#A8B5A5"
+                               FontSize="16"
                                FontWeight="Bold"
                                Margin="10,25,0,10"/>
 
                     <Button x:Name="ReportsButton"
                             Style="{StaticResource NavButtonStyle}"
                             Click="Reports_Click">
+
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Отчёты"
-                                       Foreground="#C5D0E3"/>
+                                       VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
@@ -358,216 +444,251 @@
             </DockPanel>
         </Border>
 
+
         <!-- Основная область -->
-        <Grid Grid.Column="1" Margin="32,25,32,25">
+        <Grid Grid.Column="1"
+              Margin="32,25,32,25">
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="65"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Заголовок и информация о пользователе -->
+
+            <!-- Заголовок -->
             <Grid Grid.Row="0">
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <StackPanel VerticalAlignment="Center">
+
                     <TextBlock Text="Панель администратора"
-                               FontSize="21"
-                               FontWeight="Bold"
-                               Foreground="{StaticResource TextColor}"/>
+                               FontSize="22"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextColor}"/>
 
                     <TextBlock Text="Управление информационной системой автошколы"
                                FontSize="12"
-                               Foreground="{StaticResource SecondaryTextColor}"
-                               Margin="0,3,0,0"/>
+                               Foreground="{DynamicResource SecondaryTextColor}"
+                               Margin="0,4,0,0"/>
+
                 </StackPanel>
 
+
                 <Border Grid.Column="1"
-                        Background="{StaticResource SurfaceColor}"
-                        CornerRadius="10"
-                        Padding="15,8"
+                        Background="{DynamicResource SurfaceColor}"
+                        BorderBrush="{DynamicResource BorderColor}"
+                        BorderThickness="1"
+                        CornerRadius="6"
+                        Padding="15,9"
                         VerticalAlignment="Center">
 
                     <StackPanel Orientation="Horizontal">
-                        <Ellipse Width="9"
-                                 Height="9"
-                                 Fill="#38B879"
+
+                        <Ellipse Width="8"
+                                 Height="8"
+                                 Fill="#7E9B7B"
                                  VerticalAlignment="Center"
                                  Margin="0,0,9,0"/>
 
                         <TextBlock Text="Администратор"
-                                   Foreground="{StaticResource TextColor}"
-                                   FontSize="13"
+                                   Foreground="{DynamicResource TextColor}"
+                                   FontSize="12"
                                    FontWeight="SemiBold"/>
+
                     </StackPanel>
                 </Border>
             </Grid>
 
+
             <!-- Содержимое выбранного раздела -->
-            <Grid Grid.Row="1" Margin="0,20,0,0">
+            <Grid Grid.Row="1"
+                  Margin="0,20,0,0">
+
 
                 <!-- Главная страница -->
                 <ScrollViewer x:Name="DashboardPanel"
                               VerticalScrollBarVisibility="Auto">
 
                     <StackPanel>
-                        <TextBlock Text="Добро пожаловать!"
-                                   FontSize="27"
-                                   FontWeight="Bold"
-                                   Foreground="{StaticResource TextColor}"/>
 
-                        <TextBlock Text="Здесь вы можете управлять всеми основными данными автошколы."
-                                   FontSize="14"
-                                   Foreground="{StaticResource SecondaryTextColor}"
-                                   Margin="0,7,0,25"/>
+                        <TextBlock Text="Добро пожаловать!"
+                                   FontSize="28"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColor}"/>
+
+                        <TextBlock Text="Здесь вы можете управлять основными данными автошколы."
+                                   FontSize="13"
+                                   Foreground="{DynamicResource SecondaryTextColor}"
+                                   Margin="0,7,0,25"
+                                   TextWrapping="Wrap"/>
+
 
                         <!-- Статистика -->
-                        <UniformGrid Columns="3" Margin="0,0,0,22">
+                        <UniformGrid Columns="3"
+                                     Margin="0,0,0,22">
 
                             <Border Style="{StaticResource StatCardStyle}"
                                     Margin="0,0,12,0">
+
                                 <StackPanel>
+
                                     <TextBlock Text="УЧЕНИКИ"
-                                               FontSize="11"
+                                               FontSize="10"
                                                FontWeight="Bold"
-                                               Foreground="{StaticResource SecondaryTextColor}"/>
+                                               Foreground="{DynamicResource SecondaryTextColor}"/>
 
                                     <TextBlock Text="—"
-                                               FontSize="30"
-                                               FontWeight="Bold"
-                                               Foreground="{StaticResource TextColor}"
+                                               FontSize="32"
+                                               FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextColor}"
                                                Margin="0,10,0,0"/>
 
                                     <TextBlock Text="Всего в системе"
                                                FontSize="12"
-                                               Foreground="{StaticResource SecondaryTextColor}"/>
+                                               Foreground="{DynamicResource SecondaryTextColor}"/>
+
                                 </StackPanel>
                             </Border>
 
+
                             <Border Style="{StaticResource StatCardStyle}"
                                     Margin="6,0">
+
                                 <StackPanel>
+
                                     <TextBlock Text="ИНСТРУКТОРЫ"
-                                               FontSize="11"
+                                               FontSize="10"
                                                FontWeight="Bold"
-                                               Foreground="{StaticResource SecondaryTextColor}"/>
+                                               Foreground="{DynamicResource SecondaryTextColor}"/>
 
                                     <TextBlock Text="—"
-                                               FontSize="30"
-                                               FontWeight="Bold"
-                                               Foreground="{StaticResource TextColor}"
+                                               FontSize="32"
+                                               FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextColor}"
                                                Margin="0,10,0,0"/>
 
                                     <TextBlock Text="Зарегистрированные"
                                                FontSize="12"
-                                               Foreground="{StaticResource SecondaryTextColor}"/>
+                                               Foreground="{DynamicResource SecondaryTextColor}"/>
+
                                 </StackPanel>
                             </Border>
 
+
                             <Border Style="{StaticResource StatCardStyle}"
                                     Margin="12,0,0,0">
+
                                 <StackPanel>
+
                                     <TextBlock Text="ЗАНЯТИЯ"
-                                               FontSize="11"
+                                               FontSize="10"
                                                FontWeight="Bold"
-                                               Foreground="{StaticResource SecondaryTextColor}"/>
+                                               Foreground="{DynamicResource SecondaryTextColor}"/>
 
                                     <TextBlock Text="—"
-                                               FontSize="30"
-                                               FontWeight="Bold"
-                                               Foreground="{StaticResource TextColor}"
+                                               FontSize="32"
+                                               FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextColor}"
                                                Margin="0,10,0,0"/>
 
                                     <TextBlock Text="Всего в расписании"
                                                FontSize="12"
-                                               Foreground="{StaticResource SecondaryTextColor}"/>
+                                               Foreground="{DynamicResource SecondaryTextColor}"/>
+
                                 </StackPanel>
                             </Border>
 
                         </UniformGrid>
 
-                        <!-- Быстрый переход к разделам -->
+
+                        <!-- Быстрый доступ -->
                         <Border Style="{StaticResource StatCardStyle}"
                                 Padding="25">
 
                             <StackPanel>
+
                                 <TextBlock Text="Быстрый доступ"
                                            FontSize="18"
-                                           FontWeight="Bold"
-                                           Foreground="{StaticResource TextColor}"
+                                           FontWeight="SemiBold"
+                                           Foreground="{DynamicResource TextColor}"
                                            Margin="0,0,0,8"/>
 
-                                <TextBlock Text="Выберите нужный раздел в боковом меню для управления данными."
+                                <TextBlock Text="Выберите нужный раздел для управления данными."
                                            FontSize="13"
-                                           Foreground="{StaticResource SecondaryTextColor}"
+                                           Foreground="{DynamicResource SecondaryTextColor}"
                                            TextWrapping="Wrap"/>
 
                                 <WrapPanel Margin="0,20,0,0">
+
                                     <Button Content="Ученики"
-                                            Width="125"
-                                            Height="40"
+                                            Style="{StaticResource AdminActionButtonStyle}"
                                             Margin="0,0,10,10"
                                             Click="Students_Click"/>
 
                                     <Button Content="Инструкторы"
-                                            Width="135"
-                                            Height="40"
+                                            Style="{StaticResource AdminActionButtonStyle}"
                                             Margin="0,0,10,10"
                                             Click="Instructors_Click"/>
 
                                     <Button Content="Автомобили"
-                                            Width="135"
-                                            Height="40"
+                                            Style="{StaticResource AdminActionButtonStyle}"
                                             Margin="0,0,10,10"
                                             Click="Cars_Click"/>
 
                                     <Button Content="Расписание"
-                                            Width="135"
-                                            Height="40"
+                                            Style="{StaticResource AdminActionButtonStyle}"
                                             Margin="0,0,10,10"
                                             Click="Lessons_Click"/>
+
                                 </WrapPanel>
                             </StackPanel>
                         </Border>
+
                     </StackPanel>
                 </ScrollViewer>
+
 
                 <!-- Панель разделов -->
                 <Border x:Name="SectionPanel"
                         Visibility="Collapsed"
-                        Background="{StaticResource SurfaceColor}"
-                        CornerRadius="14"
-                        BorderBrush="{StaticResource BorderColor}"
+                        Background="{DynamicResource SurfaceColor}"
+                        CornerRadius="8"
+                        BorderBrush="{DynamicResource BorderColor}"
                         BorderThickness="1"
                         Padding="30">
 
                     <StackPanel VerticalAlignment="Top">
+
                         <TextBlock x:Name="SectionTitle"
                                    Text="Раздел"
                                    FontSize="26"
-                                   FontWeight="Bold"
-                                   Foreground="{StaticResource TextColor}"/>
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColor}"/>
 
                         <TextBlock x:Name="SectionDescription"
                                    Text="Описание раздела"
-                                   FontSize="14"
-                                   Foreground="{StaticResource SecondaryTextColor}"
+                                   FontSize="13"
+                                   Foreground="{DynamicResource SecondaryTextColor}"
                                    Margin="0,10,0,25"
                                    TextWrapping="Wrap"/>
 
-                        <Border Background="{StaticResource BackgroundColor}"
-                                CornerRadius="10"
+                        <Border Background="{DynamicResource BackgroundColor}"
+                                CornerRadius="6"
                                 Padding="20">
 
                             <TextBlock Text="Рабочая область раздела будет добавлена на следующем этапе."
                                        FontSize="13"
-                                       Foreground="{StaticResource SecondaryTextColor}"
+                                       Foreground="{DynamicResource SecondaryTextColor}"
                                        TextWrapping="Wrap"/>
+
                         </Border>
                     </StackPanel>
                 </Border>
+
 
                 <!-- Раздел автомобилей -->
                 <Grid x:Name="CarsPanel"
@@ -578,65 +699,63 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
+
                     <!-- Заголовок и действия -->
-                    <Grid Grid.Row="0" Margin="0,0,0,20">
+                    <Grid Grid.Row="0"
+                          Margin="0,0,0,20">
+
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <StackPanel>
+
                             <TextBlock Text="Автомобили"
                                        FontSize="26"
-                                       FontWeight="Bold"
-                                       Foreground="#202B46"/>
+                                       FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextColor}"/>
+
                             <TextBlock Text="Управление автопарком автошколы"
-                                       FontSize="14"
-                                       Foreground="#8791A5"
+                                       FontSize="13"
+                                       Foreground="{DynamicResource SecondaryTextColor}"
                                        Margin="0,5,0,0"/>
+
                             <TextBlock Text="Для множественного удаления зажмите CTRL и выберите нужные записи"
-                                       FontSize="14"
-                                       Foreground="#8791A5"
-                                       Margin="0,5,0,0"/>
+                                       FontSize="11"
+                                       Foreground="{DynamicResource SecondaryTextColor}"
+                                       Margin="0,7,0,0"/>
+
                         </StackPanel>
+
 
                         <StackPanel Grid.Column="1"
                                     Orientation="Horizontal"
                                     VerticalAlignment="Center">
 
                             <Button Content="+ Добавить"
+                                    Style="{StaticResource AdminActionButtonStyle}"
                                     Click="AddCar_Click"
-                                    Padding="18,10"
-                                    Margin="0,0,10,0"
-                                    Background="#4169E1"
-                                    Foreground="White"
-                                    BorderThickness="0"
-                                    Cursor="Hand"/>
+                                    Margin="0,0,8,0"/>
 
                             <Button Content="Удалить"
+                                    Style="{StaticResource DeleteActionButtonStyle}"
                                     Click="DeleteCars_Click"
-                                    Padding="18,10"
-                                    Margin="0,0,10,0"
-                                    Background="#D9534F"
-                                    Foreground="White"
-                                    BorderThickness="0"
-                                    Cursor="Hand"/>
+                                    Margin="0,0,8,0"/>
 
                             <Button Content="Обновить"
-                                    Click="RefreshCars_Click"
-                                    Padding="18,10"
-                                    Background="#E9EDF5"
-                                    Foreground="#202B46"
-                                    BorderThickness="0"
-                                    Cursor="Hand"/>
+                                    Style="{StaticResource LightActionButtonStyle}"
+                                    Click="RefreshCars_Click"/>
+
                         </StackPanel>
                     </Grid>
 
+
                     <!-- Таблица автомобилей -->
                     <Border Grid.Row="1"
-                            Background="White"
-                            CornerRadius="14"
-                            BorderBrush="#E5EAF3"
+                            Background="{DynamicResource SurfaceColor}"
+                            CornerRadius="8"
+                            BorderBrush="{DynamicResource BorderColor}"
                             BorderThickness="1"
                             Padding="10">
 
@@ -653,6 +772,7 @@
                                   AutoGenerateColumns="False">
 
                             <DataGrid.Columns>
+
                                 <DataGridTextColumn Header="ID"
                                                     Binding="{Binding [ID]}"
                                                     Width="70"/>
@@ -672,9 +792,134 @@
                                 <DataGridTextColumn Header="Год выпуска"
                                                     Binding="{Binding [Год выпуска]}"
                                                     Width="120"/>
+
                             </DataGrid.Columns>
                         </DataGrid>
                     </Border>
+                </Grid>
+
+                <!-- Раздел учеников -->
+                <Grid x:Name="StudentsPanel"
+      Visibility="Collapsed">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Заголовок, поиск и действия -->
+                    <Grid Grid.Row="0"
+          Margin="0,0,0,20">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel>
+
+                            <TextBlock Text="Ученики"
+                       FontSize="26"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextColor}"/>
+
+                            <TextBlock Text="Управление данными учеников автошколы"
+                       FontSize="13"
+                       Foreground="{DynamicResource SecondaryTextColor}"
+                       Margin="0,5,0,15"/>
+
+                            <TextBox x:Name="StudentSearchBox"
+                     Width="280"
+                     Height="38"
+                     HorizontalAlignment="Left"
+                     VerticalContentAlignment="Center"
+                     Padding="10,0"
+                     FontSize="13"
+                     TextChanged="StudentSearchBox_TextChanged"
+                     ToolTip="Поиск по ФИО или телефону"/>
+
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center">
+
+                            <Button Content="+ Добавить"
+                    Style="{StaticResource AdminActionButtonStyle}"
+                    Click="AddStudent_Click"
+                    Margin="0,0,8,0"/>
+
+                            <Button Content="Изменить"
+                    Style="{StaticResource LightActionButtonStyle}"
+                    Click="EditStudent_Click"
+                    Margin="0,0,8,0"/>
+
+                            <Button Content="Удалить"
+                    Style="{StaticResource DeleteActionButtonStyle}"
+                    Click="DeleteStudents_Click"
+                    Margin="0,0,8,0"/>
+
+                            <Button Content="Обновить"
+                    Style="{StaticResource LightActionButtonStyle}"
+                    Click="RefreshStudents_Click"/>
+
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Таблица учеников -->
+                    <Border Grid.Row="1"
+            Background="{DynamicResource SurfaceColor}"
+            CornerRadius="8"
+            BorderBrush="{DynamicResource BorderColor}"
+            BorderThickness="1"
+            Padding="10">
+
+                        <DataGrid x:Name="StudentsDataGrid"
+                  Style="{StaticResource ModernDataGridStyle}"
+                  HeadersVisibility="Column"
+                  SelectionMode="Extended"
+                  SelectionUnit="FullRow"
+                  CanUserSortColumns="True"
+                  CanUserReorderColumns="True"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+                            <DataGrid.Columns>
+
+                                <DataGridTextColumn Header="ID"
+                                    Binding="{Binding [ID]}"
+                                    Width="60"/>
+
+                                <DataGridTextColumn Header="Фамилия"
+                                    Binding="{Binding [Фамилия]}"
+                                    Width="1.2*"/>
+
+                                <DataGridTextColumn Header="Имя"
+                                    Binding="{Binding [Имя]}"
+                                    Width="1.1*"/>
+
+                                <DataGridTextColumn Header="Отчество"
+                                    Binding="{Binding [Отчество]}"
+                                    Width="1.2*"/>
+
+                                <DataGridTextColumn Header="Телефон"
+                                    Binding="{Binding [Телефон]}"
+                                    Width="1.3*"/>
+
+                                <DataGridTextColumn Header="Статус"
+                                    Binding="{Binding [Статус]}"
+                                    Width="1.1*"/>
+
+                                <DataGridTextColumn Header="Группа"
+                                    Binding="{Binding [Группа]}"
+                                    Width="1.2*"/>
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+
                 </Grid>
 
             </Grid>

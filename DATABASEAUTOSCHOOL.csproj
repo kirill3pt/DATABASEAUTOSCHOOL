@@ -59,6 +59,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Interfaces\AddStudentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Interfaces\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -82,8 +86,12 @@
     <Compile Include="Classes\ILOGGER.cs" />
     <Compile Include="Classes\LOGGER.cs" />
     <Compile Include="Classes\PasswordHasher.cs" />
+    <Compile Include="Classes\StudentService.cs" />
     <Compile Include="Interfaces\AddCarWindow.xaml.cs">
       <DependentUpon>AddCarWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\AddStudentWindow.xaml.cs">
+      <DependentUpon>AddStudentWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>

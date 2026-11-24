@@ -27,15 +27,16 @@ namespace DATABASEAUTOSCHOOL.Interfaces
             {
                 button.Background = Brushes.Transparent;
                 button.Foreground = new SolidColorBrush(
-                    Color.FromRgb(197, 208, 227));
+                    Color.FromRgb(216, 222, 216));
             }
 
             if (activeButton != null)
             {
                 activeButton.Background = new SolidColorBrush(
-                    Color.FromRgb(65, 105, 225));
+                    Color.FromRgb(168, 181, 165));
 
-                activeButton.Foreground = Brushes.White;
+                activeButton.Foreground = new SolidColorBrush(
+                    Color.FromRgb(41, 51, 48));
             }
         }
 

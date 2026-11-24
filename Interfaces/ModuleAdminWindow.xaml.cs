@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace DATABASEAUTOSCHOOL.Interfaces
 {
@@ -11,6 +12,7 @@ namespace DATABASEAUTOSCHOOL.Interfaces
     {
 
         private readonly CarService carService = new CarService();
+        private readonly StudentService studentService = new StudentService();
         private readonly LOGGER logger = new LOGGER();
 
         public ModuleAdminWindow()
@@ -30,27 +32,24 @@ namespace DATABASEAUTOSCHOOL.Interfaces
                 InstructorsButton,
                 CarsButton,
                 LessonsButton,
-                ReportsButton
+                ReportsButton,
+                SettingsButton
             };
 
             foreach (Button button in buttons)
             {
-                button.Background =
-                    System.Windows.Media.Brushes.Transparent;
-
-                button.Foreground =
-                    new System.Windows.Media.SolidColorBrush(
-                        System.Windows.Media.Color.FromRgb(197, 208, 227));
+                button.Background = Brushes.Transparent;
+                button.Foreground = new SolidColorBrush(
+                    Color.FromRgb(216, 222, 216));
             }
 
             if (activeButton != null)
             {
-                activeButton.Background =
-                    new System.Windows.Media.SolidColorBrush(
-                        System.Windows.Media.Color.FromRgb(65, 105, 225));
+                activeButton.Background = new SolidColorBrush(
+                    Color.FromRgb(168, 181, 165));
 
-                activeButton.Foreground =
-                    System.Windows.Media.Brushes.White;
+                activeButton.Foreground = new SolidColorBrush(
+                    Color.FromRgb(41, 51, 48));
             }
         }
 
@@ -62,31 +61,137 @@ namespace DATABASEAUTOSCHOOL.Interfaces
             DashboardPanel.Visibility = Visibility.Visible;
             SectionPanel.Visibility = Visibility.Collapsed;
             CarsPanel.Visibility = Visibility.Collapsed;
+            StudentsPanel.Visibility = Visibility.Collapsed;
         }
 
-        // Универсальное открытие раздела
-        private void ShowSection(
-            string title,
-            string description,
-            Button activeButton)
+        private void ShowSection(string title, string description, Button activeButton)
         {
             SetActiveButton(activeButton);
 
             DashboardPanel.Visibility = Visibility.Collapsed;
             SectionPanel.Visibility = Visibility.Visible;
             CarsPanel.Visibility = Visibility.Collapsed;
+            StudentsPanel.Visibility = Visibility.Collapsed;
 
             SectionTitle.Text = title;
             SectionDescription.Text = description;
         }
 
+
+
+        private void LoadStudents()
+        {
+            try
+            {
+                StudentsDataGrid.ItemsSource =
+                    studentService.GetStudents(StudentSearchBox.Text).DefaultView;
+
+                logger.LOG("Список учеников успешно загружен.");
+            }
+            catch (Exception ex)
+            {
+                logger.LOG("Ошибка загрузки учеников: " + ex);
+
+                MessageBox.Show(
+                    "Не удалось загрузить список учеников:\n" + ex.Message,
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+
+        private void StudentSearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (IsInitialized)
+                LoadStudents();
+        }
+
+        private void RefreshStudents_Click(object sender, RoutedEventArgs e)
+        {
+            StudentSearchBox.Clear();
+            LoadStudents();
+
+            logger.LOG("Список учеников обновлён.");
+        }
+
+        private void DeleteStudents_Click(object sender, RoutedEventArgs e)
+        {
+            if (StudentsDataGrid.SelectedItems.Count == 0)
+            {
+                MessageBox.Show(
+                    "Выберите одного или нескольких учеников для удаления.",
+                    "Внимание",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            List<int> ids = new List<int>();
+
+            foreach (DataRowView row in StudentsDataGrid.SelectedItems)
+                ids.Add(Convert.ToInt32(row["ID"]));
+
+            MessageBoxResult result = MessageBox.Show(
+                $"Вы действительно хотите удалить выбранных учеников ({ids.Count})?",
+                "Подтверждение удаления",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result != MessageBoxResult.Yes)
+                return;
+
+            try
+            {
+                studentService.DeleteStudents(ids);
+
+                logger.LOG($"Удалено учеников: {ids.Count}");
+
+                LoadStudents();
+
+                MessageBox.Show(
+                    $"Успешно удалено учеников: {ids.Count}.",
+                    "Готово",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                logger.LOG("Ошибка удаления учеников: " + ex);
+
+                MessageBox.Show(
+                    "Не удалось удалить учеников:\n" + ex.Message,
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+
+        // Временные обработчики. Позже подключим отдельные окна.
+        private void AddStudent_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Окно добавления ученика будет подключено следующим шагом.");
+        }
+
+        private void EditStudent_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Окно изменения данных ученика будет подключено следующим шагом.");
+        }
+
+
         // Ученики
         private void Students_Click(object sender, RoutedEventArgs e)
         {
-            ShowSection(
-                "Ученики",
-                "Просмотр, добавление, изменение и удаление данных учеников.",
-                StudentsButton);
+            logger.LOG("Открыт раздел учеников.");
+
+            SetActiveButton(StudentsButton);
+
+            DashboardPanel.Visibility = Visibility.Collapsed;
+            SectionPanel.Visibility = Visibility.Collapsed;
+            CarsPanel.Visibility = Visibility.Collapsed;
+            StudentsPanel.Visibility = Visibility.Visible;
+
+            LoadStudents();
         }
 
         // Инструкторы
@@ -218,6 +323,7 @@ namespace DATABASEAUTOSCHOOL.Interfaces
             DashboardPanel.Visibility = Visibility.Collapsed;
             SectionPanel.Visibility = Visibility.Collapsed;
             CarsPanel.Visibility = Visibility.Visible;
+            StudentsPanel.Visibility = Visibility.Collapsed;
 
             LoadCars();
         }
@@ -246,7 +352,7 @@ namespace DATABASEAUTOSCHOOL.Interfaces
             ShowSection(
                 "Настройки",
                 "Настройка приложения и параметров журналирования.",
-                null);
+                SettingsButton);
         }
 
         // О программе

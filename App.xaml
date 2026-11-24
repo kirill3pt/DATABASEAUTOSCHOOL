@@ -1,69 +1,160 @@
 ﻿<Application x:Class="DATABASEAUTOSCHOOL.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:DATABASEAUTOSCHOOL"
              StartupUri="Interfaces/LoginWindow.xaml">
 
     <Application.Resources>
 
         <!-- Цветовая палитра -->
-        <SolidColorBrush x:Key="PrimaryColor" Color="#4169E1"/>
-        <SolidColorBrush x:Key="PrimaryHover" Color="#3156C5"/>
-        <SolidColorBrush x:Key="BackgroundColor" Color="#F3F5F9"/>
-        <SolidColorBrush x:Key="SurfaceColor" Color="#FFFFFF"/>
-        <SolidColorBrush x:Key="TextColor" Color="#202B46"/>
-        <SolidColorBrush x:Key="SecondaryTextColor" Color="#8791A5"/>
-        <SolidColorBrush x:Key="BorderColor" Color="#E1E6EF"/>
 
-        <!-- Общий стиль текста -->
+        <SolidColorBrush x:Key="BackgroundColor" Color="#F3F1EB"/>
+        <SolidColorBrush x:Key="SurfaceColor" Color="#FAF9F6"/>
+        <SolidColorBrush x:Key="TextColor" Color="#293330"/>
+        <SolidColorBrush x:Key="SecondaryTextColor" Color="#737D76"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#E2E0D8"/>
+
+        <SolidColorBrush x:Key="PrimaryColor" Color="#293330"/>
+        <SolidColorBrush x:Key="PrimaryHover" Color="#3B4742"/>
+
+        <SolidColorBrush x:Key="AccentColor" Color="#A8B5A5"/>
+        <SolidColorBrush x:Key="AccentHover" Color="#95A58F"/>
+        <SolidColorBrush x:Key="AccentTextColor" Color="#293330"/>
+
+        <SolidColorBrush x:Key="InputBackgroundColor" Color="#FBFAF7"/>
+        <SolidColorBrush x:Key="MutedSurfaceColor" Color="#EAE8E0"/>
+        <SolidColorBrush x:Key="DangerColor" Color="#A96D60"/>
+        <SolidColorBrush x:Key="ForestCharcoal" Color="#293330"/>
+        <SolidColorBrush x:Key="Sage" Color="#A8B5A5"/>
+
+
+
+        <!-- Основной текст -->
         <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
         </Style>
 
-        <!-- Кнопки -->
+
+        <!-- Заголовки -->
+
+        <Style x:Key="HeadingTextStyle"
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="FontFamily" Value="Bahnschrift"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+
+        <!-- Технические подписи -->
+
+        <Style x:Key="TechnicalTextStyle"
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="FontFamily" Value="Bahnschrift"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Foreground" Value="{DynamicResource SecondaryTextColor}"/>
+        </Style>
+
+
+
+        <!-- Основные кнопки -->
         <Style TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Height" Value="42"/>
-            <Setter Property="Padding" Value="18,8"/>
+            <Setter Property="Height" Value="44"/>
+            <Setter Property="Padding" Value="22,9"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
 
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border x:Name="ButtonBorder"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="9"
-                                Padding="{TemplateBinding Padding}">
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="5"
+                        Padding="{TemplateBinding Padding}">
 
                             <ContentPresenter
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        RecognizesAccessKey="True"
+                        TextElement.Foreground="{TemplateBinding Foreground}"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Background"
+                                Value="{DynamicResource PrimaryHover}"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Opacity"
+                                Value="0.8"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Opacity"
+                                Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+
+        <!-- Акцентная кнопка -->
+        <Style x:Key="AccentButtonStyle"
+       TargetType="{x:Type Button}"
+       BasedOn="{StaticResource {x:Type Button}}">
+
+            <Setter Property="Background" Value="{DynamicResource ForestCharcoal}"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource ForestCharcoal}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="ButtonBorder"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="5"
+                        Padding="{TemplateBinding Padding}">
+
+                            <ContentPresenter
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        RecognizesAccessKey="True"
+                        TextElement.Foreground="{TemplateBinding Foreground}"/>
                         </Border>
 
                         <ControlTemplate.Triggers>
 
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="ButtonBorder"
-                                        Property="Background"
-                                        Value="{StaticResource PrimaryHover}"/>
+                                Property="Background"
+                                Value="{DynamicResource PrimaryHover}"/>
                             </Trigger>
 
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="ButtonBorder"
-                                        Property="Opacity"
-                                        Value="0.8"/>
+                                Property="Opacity"
+                                Value="0.8"/>
                             </Trigger>
 
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="ButtonBorder"
-                                        Property="Opacity"
-                                        Value="0.45"/>
+                                Property="Opacity"
+                                Value="0.4"/>
                             </Trigger>
 
                         </ControlTemplate.Triggers>
@@ -72,14 +163,64 @@
             </Setter>
         </Style>
 
+
+
+
+        <!-- Второстепенная кнопка -->
+        <Style x:Key="SecondaryButtonStyle"
+       TargetType="{x:Type Button}"
+       BasedOn="{StaticResource {x:Type Button}}">
+
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="ButtonBorder"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{DynamicResource BorderColor}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="5"
+                        Padding="{TemplateBinding Padding}">
+
+                            <ContentPresenter
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        RecognizesAccessKey="True"
+                        TextElement.Foreground="{TemplateBinding Foreground}"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Background"
+                                Value="{DynamicResource MutedSurfaceColor}"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Opacity"
+                                Value="0.7"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
         <!-- Текстовые поля -->
+
         <Style TargetType="{x:Type TextBox}">
-            <Setter Property="Height" Value="42"/>
-            <Setter Property="Padding" Value="12,0,12,0"/>
+            <Setter Property="Height" Value="44"/>
+            <Setter Property="Padding" Value="13,0"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
-            <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
-            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
+            <Setter Property="Background" Value="{DynamicResource InputBackgroundColor}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
 
@@ -88,9 +229,9 @@
                     <ControlTemplate TargetType="{x:Type TextBox}">
                         <Border x:Name="InputBorder"
                                 Background="{TemplateBinding Background}"
-                                BorderBrush="{StaticResource BorderColor}"
+                                BorderBrush="{DynamicResource BorderColor}"
                                 BorderThickness="1"
-                                CornerRadius="9">
+                                CornerRadius="5">
 
                             <ScrollViewer x:Name="PART_ContentHost"
                                           Margin="{TemplateBinding Padding}"
@@ -102,7 +243,7 @@
                             <Trigger Property="IsKeyboardFocused" Value="True">
                                 <Setter TargetName="InputBorder"
                                         Property="BorderBrush"
-                                        Value="{StaticResource PrimaryColor}"/>
+                                        Value="{DynamicResource AccentColor}"/>
                                 <Setter TargetName="InputBorder"
                                         Property="BorderThickness"
                                         Value="1.5"/>
@@ -120,24 +261,27 @@
             </Setter>
         </Style>
 
+
         <!-- Поля пароля -->
+
         <Style TargetType="{x:Type PasswordBox}">
-            <Setter Property="Height" Value="42"/>
-            <Setter Property="Padding" Value="12,0,12,0"/>
+            <Setter Property="Height" Value="44"/>
+            <Setter Property="Padding" Value="13,0"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
-            <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
-            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
+            <Setter Property="Background" Value="{DynamicResource InputBackgroundColor}"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
 
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type PasswordBox}">
                         <Border x:Name="InputBorder"
                                 Background="{TemplateBinding Background}"
-                                BorderBrush="{StaticResource BorderColor}"
+                                BorderBrush="{DynamicResource BorderColor}"
                                 BorderThickness="1"
-                                CornerRadius="9">
+                                CornerRadius="5">
 
                             <ScrollViewer x:Name="PART_ContentHost"
                                           Margin="{TemplateBinding Padding}"
@@ -149,57 +293,73 @@
                             <Trigger Property="IsKeyboardFocused" Value="True">
                                 <Setter TargetName="InputBorder"
                                         Property="BorderBrush"
-                                        Value="{StaticResource PrimaryColor}"/>
+                                        Value="{DynamicResource AccentColor}"/>
                                 <Setter TargetName="InputBorder"
                                         Property="BorderThickness"
                                         Value="1.5"/>
                             </Trigger>
 
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="InputBorder"
+                                        Property="Opacity"
+                                        Value="0.5"/>
+                            </Trigger>
+
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
+
         <!-- Элементы выпадающего списка -->
+
         <Style TargetType="{x:Type ComboBoxItem}">
-            <Setter Property="Padding" Value="12,9"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="Background" Value="{DynamicResource SurfaceColor}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                         <Border x:Name="ItemBorder"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="6"
+                                CornerRadius="4"
                                 Padding="{TemplateBinding Padding}">
+
                             <ContentPresenter/>
                         </Border>
 
                         <ControlTemplate.Triggers>
+
                             <Trigger Property="IsHighlighted" Value="True">
                                 <Setter TargetName="ItemBorder"
                                         Property="Background"
-                                        Value="#EDF1FF"/>
+                                        Value="{DynamicResource MutedSurfaceColor}"/>
                             </Trigger>
 
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter TargetName="ItemBorder"
                                         Property="Background"
-                                        Value="#E5EBFF"/>
+                                        Value="{DynamicResource AccentColor}"/>
                             </Trigger>
+
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
+
         <!-- Выпадающие списки -->
+
         <Style TargetType="{x:Type ComboBox}">
             <Setter Property="Height" Value="44"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
-            <Setter Property="Background" Value="White"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
+            <Setter Property="Background" Value="{DynamicResource InputBackgroundColor}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Padding" Value="12,8"/>
 
@@ -210,7 +370,8 @@
 
                             <ToggleButton x:Name="DropDownButton"
                                           Focusable="False"
-                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay,
+                                          IsChecked="{Binding IsDropDownOpen,
+                                              Mode=TwoWay,
                                               RelativeSource={RelativeSource TemplatedParent}}"
                                           ClickMode="Press"
                                           Background="Transparent"
@@ -219,10 +380,10 @@
                                 <ToggleButton.Template>
                                     <ControlTemplate TargetType="{x:Type ToggleButton}">
                                         <Border x:Name="ComboBorder"
-                                                Background="White"
-                                                BorderBrush="{StaticResource BorderColor}"
+                                                Background="{DynamicResource InputBackgroundColor}"
+                                                BorderBrush="{DynamicResource BorderColor}"
                                                 BorderThickness="1"
-                                                CornerRadius="9">
+                                                CornerRadius="5">
 
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -233,15 +394,16 @@
                                                 <ContentPresenter Grid.Column="0"
                                                     Margin="12,0,0,0"
                                                     VerticalAlignment="Center"
+                                                    TextElement.Foreground="{DynamicResource TextColor}"
                                                     Content="{Binding SelectionBoxItem,
-                                                        RelativeSource={RelativeSource AncestorType=ComboBox}}"
+                                                        RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}"
                                                     ContentTemplate="{Binding SelectionBoxItemTemplate,
-                                                        RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                                                        RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}"/>
 
                                                 <Path Grid.Column="1"
                                                       Data="M 0 0 L 5 5 L 10 0"
-                                                      Stroke="#8791A5"
-                                                      StrokeThickness="1.7"
+                                                      Stroke="{DynamicResource SecondaryTextColor}"
+                                                      StrokeThickness="1.5"
                                                       HorizontalAlignment="Center"
                                                       VerticalAlignment="Center"/>
                                             </Grid>
@@ -251,12 +413,13 @@
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter TargetName="ComboBorder"
                                                         Property="BorderBrush"
-                                                        Value="{StaticResource PrimaryColor}"/>
+                                                        Value="{DynamicResource AccentColor}"/>
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </ToggleButton.Template>
                             </ToggleButton>
+
 
                             <Popup x:Name="PART_Popup"
                                    Placement="Bottom"
@@ -265,13 +428,13 @@
                                    Focusable="False"
                                    PopupAnimation="Fade">
 
-                                <Border Background="White"
-                                        BorderBrush="{StaticResource BorderColor}"
+                                <Border Background="{DynamicResource SurfaceColor}"
+                                        BorderBrush="{DynamicResource BorderColor}"
                                         BorderThickness="1"
-                                        CornerRadius="9"
+                                        CornerRadius="5"
                                         Margin="0,4,0,0"
                                         MinWidth="{Binding ActualWidth,
-                                            RelativeSource={RelativeSource AncestorType=ComboBox}}">
+                                            RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}">
 
                                     <ScrollViewer MaxHeight="200">
                                         <ItemsPresenter/>
@@ -285,13 +448,18 @@
             </Setter>
         </Style>
 
-        <!-- Стиль карточек -->
-        <Style x:Key="CardStyle" TargetType="{x:Type Border}">
-            <Setter Property="Background" Value="{StaticResource SurfaceColor}"/>
-            <Setter Property="CornerRadius" Value="14"/>
-            <Setter Property="Padding" Value="20"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+
+        <!-- Карточки -->
+
+        <Style x:Key="CardStyle"
+               TargetType="{x:Type Border}">
+
+            <Setter Property="Background" Value="{DynamicResource SurfaceColor}"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="22"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}"/>
             <Setter Property="BorderThickness" Value="1"/>
+
         </Style>
 
     </Application.Resources>
