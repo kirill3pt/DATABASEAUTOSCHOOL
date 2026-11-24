@@ -18,8 +18,8 @@
                TargetType="{x:Type Button}"
                BasedOn="{StaticResource {x:Type Button}}">
 
-            <Setter Property="Height" Value="46"/>
-            <Setter Property="Margin" Value="0,3"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Margin" Value="0,2"/>
             <Setter Property="Padding" Value="14,0"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="Foreground" Value="#D7DED8"/>
@@ -302,7 +302,15 @@
 
                 <!-- Нижняя часть меню -->
                 <StackPanel DockPanel.Dock="Bottom">
-
+                    <!-- Дополнительные разделы -->
+                    <TextBlock Text="ДОПОЛНИТЕЛЬНО"
+                               Foreground="#A8B5A5"
+                               FontSize="14"
+                               FontWeight="Bold"
+                               Margin="10,10,0,8"/>
+                    <Border Height="1"
+                            Background="#536158"
+                            Margin="0,0,0,0"/>
                     <Button x:Name="SettingsButton"
                             Style="{StaticResource NavButtonStyle}"
                             Click="Settings_Click" Cursor="Hand">
@@ -339,7 +347,7 @@
                 <StackPanel>
 
                     <!-- Название приложения -->
-                    <StackPanel Margin="5,8,0,38">
+                    <StackPanel Margin="5,8,0,24">
 
                         <TextBlock Text="АВТОШКОЛА"
                                    Foreground="#F3F1EB"
@@ -358,9 +366,9 @@
                     <!-- Главная -->
                     <TextBlock Text="ГЛАВНОЕ"
                                Foreground="#A8B5A5"
-                               FontSize="16"
+                               FontSize="14"
                                FontWeight="Bold"
-                               Margin="10,0,0,10"/>
+                               Margin="10,0,0,8"/>
 
                     <Button x:Name="DashboardButton"
                             Style="{StaticResource NavButtonStyle}"
@@ -376,10 +384,19 @@
                     <!-- Управление данными -->
                     <TextBlock Text="УПРАВЛЕНИЕ"
                                Foreground="#A8B5A5"
-                               FontSize="16"
+                               FontSize="14"
                                FontWeight="Bold"
-                               Margin="10,25,0,10"/>
-
+                               Margin="10,10,0,8"/>
+                    
+                    <Button x:Name="GroupsButton"
+                    Style="{StaticResource NavButtonStyle}"
+                    Click="Groups_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Группы"
+                               VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    
                     <Button x:Name="StudentsButton"
                             Style="{StaticResource NavButtonStyle}"
                             Click="Students_Click">
@@ -389,6 +406,8 @@
                                        VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
+
+
 
                     <Button x:Name="InstructorsButton"
                             Style="{StaticResource NavButtonStyle}"
@@ -419,16 +438,17 @@
                                        VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
+                    <Button x:Name="PaymentsButton"
+        Style="{StaticResource NavButtonStyle}"
+        Click="Payments_Click">
 
-                    <Border Height="1"
-                            Background="#536158"
-                            Margin="0,0,0,0"/>
-                    <!-- Дополнительные разделы -->
-                    <TextBlock Text="ДОПОЛНИТЕЛЬНО"
-                               Foreground="#A8B5A5"
-                               FontSize="16"
-                               FontWeight="Bold"
-                               Margin="10,25,0,10"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Платежи"
+                   VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+
 
                     <Button x:Name="ReportsButton"
                             Style="{StaticResource NavButtonStyle}"
@@ -541,11 +561,13 @@
                                                FontWeight="Bold"
                                                Foreground="{DynamicResource SecondaryTextColor}"/>
 
-                                    <TextBlock Text="—"
-                                               FontSize="32"
-                                               FontWeight="SemiBold"
-                                               Foreground="{DynamicResource TextColor}"
-                                               Margin="0,10,0,0"/>
+
+                                    <TextBlock x:Name="StudentsCountText"
+                                                Text="0"
+                                                FontSize="24"
+                                                FontWeight="SemiBold"
+                                                Foreground="{DynamicResource TextColor}"
+                                                Margin="0,10,0,0"/>
 
                                     <TextBlock Text="Всего в системе"
                                                FontSize="12"
@@ -624,6 +646,11 @@
 
                                 <WrapPanel Margin="0,20,0,0">
 
+                                    <Button Content="Группы"
+                                            Style="{StaticResource AdminActionButtonStyle}"
+                                            Margin="0,0,10,10"
+                                            Click="Groups_Click"/>
+                                    
                                     <Button Content="Ученики"
                                             Style="{StaticResource AdminActionButtonStyle}"
                                             Margin="0,0,10,10"
@@ -853,7 +880,10 @@
                     Style="{StaticResource LightActionButtonStyle}"
                     Click="EditStudent_Click"
                     Margin="0,0,8,0"/>
-
+                            <Button Content="Платежи ученика"
+                    Style="{StaticResource LightActionButtonStyle}"
+                    Click="StudentPayments_Click"
+                    Margin="0,0,8,0"/>
                             <Button Content="Удалить"
                     Style="{StaticResource DeleteActionButtonStyle}"
                     Click="DeleteStudents_Click"
@@ -922,6 +952,240 @@
 
                 </Grid>
 
+                <!-- Раздел групп -->
+                <Grid x:Name="GroupsPanel"
+                       Visibility="Collapsed">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Заголовок и действия -->
+                    <Grid Grid.Row="0"
+          Margin="0,0,0,20">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel>
+
+                            <TextBlock Text="Учебные группы"
+                       FontSize="26"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextColor}"/>
+
+                            <TextBlock Text="Управление учебными группами автошколы"
+                       FontSize="13"
+                       Foreground="{DynamicResource SecondaryTextColor}"
+                       Margin="0,5,0,15"/>
+
+                            <TextBox x:Name="GroupSearchBox"
+                     Width="280"
+                     Height="38"
+                     HorizontalAlignment="Left"
+                     VerticalContentAlignment="Center"
+                     Padding="10,0"
+                     FontSize="13"
+                     TextChanged="GroupSearchBox_TextChanged"
+                     ToolTip="Поиск по названию группы"/>
+
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center">
+
+                            <Button Content="+ Добавить"
+                    Style="{StaticResource AdminActionButtonStyle}"
+                    Click="AddGroup_Click"
+                    Margin="0,0,8,0"/>
+
+                            <Button Content="Изменить"
+                    Style="{StaticResource LightActionButtonStyle}"
+                    Click="EditGroup_Click"
+                    Margin="0,0,8,0"/>
+
+                            <Button Content="Удалить"
+                    Style="{StaticResource DeleteActionButtonStyle}"
+                    Click="DeleteGroup_Click"
+                    Margin="0,0,8,0"/>
+
+                            <Button Content="Обновить"
+                    Style="{StaticResource LightActionButtonStyle}"
+                    Click="RefreshGroups_Click"/>
+
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Таблица групп -->
+                    <Border Grid.Row="1"
+            Background="{DynamicResource SurfaceColor}"
+            CornerRadius="8"
+            BorderBrush="{DynamicResource BorderColor}"
+            BorderThickness="1"
+            Padding="10">
+
+                        <DataGrid x:Name="GroupsDataGrid"
+                  Style="{StaticResource ModernDataGridStyle}"
+                  HeadersVisibility="Column"
+                  SelectionMode="Single"
+                  SelectionUnit="FullRow"
+                  CanUserSortColumns="True"
+                  CanUserReorderColumns="True"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+                            <DataGrid.Columns>
+
+                                <DataGridTextColumn Header="ID"
+                                    Binding="{Binding [ID]}"
+                                    Width="80"/>
+                                <DataGridTextColumn Header="Название группы"
+                                    Binding="{Binding [Название группы]}"
+                                    Width="2*"/>
+                                <DataGridTextColumn Header="Количество учеников"
+                                    Binding="{Binding [Количество учеников]}"
+                                    Width="1.2*"/>
+                                <DataGridTextColumn Header="Дата начала"
+                                    Binding="{Binding [Дата начала], StringFormat={}{0:dd.MM.yyyy}}"
+                                    Width="1.3*"/>
+
+                                <DataGridTextColumn Header="Дата окончания"
+                                    Binding="{Binding [Дата окончания], StringFormat={}{0:dd.MM.yyyy}}"
+                                    Width="1.3*"/>
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+
+                </Grid>
+                <!-- Раздел платежей -->
+                <Grid x:Name="PaymentsPanel"
+      Visibility="Collapsed">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Заголовок, поиск и действия -->
+                    <Grid Grid.Row="0"
+          Margin="0,0,0,20">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel>
+
+                            <TextBlock Text="Платежи"
+                       FontSize="26"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextColor}"/>
+
+                            <TextBlock Text="Учёт платежей и оплат учеников автошколы"
+                       FontSize="13"
+                       Foreground="{DynamicResource SecondaryTextColor}"
+                       Margin="0,5,0,15"/>
+
+                            <TextBox x:Name="PaymentSearchBox"
+                     Width="280"
+                     Height="38"
+                     HorizontalAlignment="Left"
+                     VerticalContentAlignment="Center"
+                     Padding="10,0"
+                     FontSize="13"
+                     TextChanged="PaymentSearchBox_TextChanged"
+                     ToolTip="Поиск по ФИО ученика"/>
+
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center">
+
+                            <Button Content="+ Добавить"
+                    Style="{StaticResource AdminActionButtonStyle}"
+                    Click="AddPayment_Click"
+                    Margin="0,0,8,0"/>
+
+                            <Button Content="Изменить"
+                    Style="{StaticResource LightActionButtonStyle}"
+                    Click="EditPayment_Click"
+                    Margin="0,0,8,0"/>
+
+                            <Button Content="Удалить"
+                    Style="{StaticResource DeleteActionButtonStyle}"
+                    Click="DeletePayments_Click"
+                    Margin="0,0,8,0"/>
+
+                            <Button Content="Обновить"
+                    Style="{StaticResource LightActionButtonStyle}"
+                    Click="RefreshPayments_Click"/>
+
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Таблица платежей -->
+                    <Border Grid.Row="1"
+            Background="{DynamicResource SurfaceColor}"
+            CornerRadius="8"
+            BorderBrush="{DynamicResource BorderColor}"
+            BorderThickness="1"
+            Padding="10">
+
+                        <DataGrid x:Name="PaymentsDataGrid"
+                  Style="{StaticResource ModernDataGridStyle}"
+                  HeadersVisibility="Column"
+                  SelectionMode="Extended"
+                  SelectionUnit="FullRow"
+                  CanUserSortColumns="True"
+                  CanUserReorderColumns="True"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+                            <DataGrid.Columns>
+
+                                <DataGridTextColumn Header="ID"
+                                    Binding="{Binding [ID]}"
+                                    Width="70"/>
+
+                                <DataGridTextColumn Header="Ученик"
+                                    Binding="{Binding [Ученик]}"
+                                    Width="2*"/>
+
+                                <DataGridTextColumn Header="Сумма"
+                                    Binding="{Binding [Сумма], StringFormat={}{0:N2} ₽}"
+                                    Width="1.2*"/>
+
+                                <DataGridTextColumn Header="Дата платежа"
+                                    Binding="{Binding [Дата платежа], StringFormat={}{0:dd.MM.yyyy}}"
+                                    Width="1.4*"/>
+
+                                <DataGridTextColumn Header="Статус"
+                                    Binding="{Binding [Статус]}"
+                                    Width="1.2*"/>
+
+                                <DataGridTextColumn Header="Телефон"
+                                    Binding="{Binding [Телефон]}"
+                                    Width="1.3*"/>
+
+                                <DataGridTextColumn Header="Группа"
+                                    Binding="{Binding [Группа]}"
+                                    Width="1.3*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

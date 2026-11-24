@@ -1,0 +1,134 @@
+﻿<Window x:Class="DATABASEAUTOSCHOOL.Interfaces.AddPaymentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Добавление платежа"
+        Width="460"
+        Height="570"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource BackgroundColor}"
+        FontFamily="Segoe UI">
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,24">
+            <TextBlock Text="Новый платёж"
+                       FontSize="25"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextColor}"/>
+
+            <TextBlock Text="Заполните информацию о платеже"
+                       FontSize="13"
+                       Foreground="{DynamicResource SecondaryTextColor}"
+                       Margin="0,6,0,0"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1">
+
+            <TextBlock Text="Ученик"
+                       FontSize="13"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextColor}"
+                       Margin="0,0,0,7"/>
+
+            <ComboBox x:Name="StudentComboBox"
+                      Height="40"
+                      Padding="10,0"
+                      VerticalContentAlignment="Center"
+                      FontSize="14"
+                      Background="#FBFAF7"
+                      Foreground="#293330"
+                      BorderBrush="#E2E0D8">
+
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding FIO}"
+                                   Foreground="#293330"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <TextBlock Text="Сумма платежа"
+                       FontSize="13"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextColor}"
+                       Margin="0,18,0,7"/>
+
+            <TextBox x:Name="AmountBox"
+                     Height="40"
+                     Padding="10,0"
+                     VerticalContentAlignment="Center"
+                     FontSize="14"
+                     Background="#FBFAF7"
+                     Foreground="#293330"
+                     BorderBrush="#E2E0D8"
+                     ToolTip="Например, 15000,00"/>
+
+            <TextBlock Text="Дата платежа"
+                       FontSize="13"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextColor}"
+                       Margin="0,18,0,7"/>
+
+            <DatePicker x:Name="PaymentDatePicker"
+                        Height="40"
+                        FontSize="14"
+                        SelectedDate="{x:Static sys:DateTime.Today}"
+                        Background="#FBFAF7"
+                        Foreground="#293330"
+                        BorderBrush="#E2E0D8"
+                        xmlns:sys="clr-namespace:System;assembly=mscorlib"/>
+
+            <TextBlock Text="Статус платежа"
+                       FontSize="13"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextColor}"
+                       Margin="0,18,0,7"/>
+
+            <ComboBox x:Name="PaymentStatusComboBox"
+                      Height="40"
+                      Padding="10,0"
+                      VerticalContentAlignment="Center"
+                      FontSize="14"
+                      Background="#FBFAF7"
+                      Foreground="#293330"
+                      BorderBrush="#E2E0D8">
+                <ComboBoxItem Content="Оплачен"/>
+                <ComboBoxItem Content="Ожидает оплаты"/>
+                <ComboBoxItem Content="Отменён"/>
+            </ComboBox>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,24,0,0">
+
+            <Button Content="Отмена"
+                    Width="110"
+                    Height="40"
+                    Margin="0,0,10,0"
+                    Background="{DynamicResource Sage}"
+                    Foreground="{DynamicResource TextColor}"
+                    BorderThickness="0"
+                    Cursor="Hand"
+                    Click="Cancel_Click"/>
+
+            <Button Content="Сохранить"
+                    Width="130"
+                    Height="40"
+                    Background="{DynamicResource PrimaryColor}"
+                    Foreground="#FAF9F6"
+                    BorderThickness="0"
+                    Cursor="Hand"
+                    Click="Save_Click"/>
+
+        </StackPanel>
+    </Grid>
+</Window>

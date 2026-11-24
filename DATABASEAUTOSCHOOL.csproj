@@ -59,6 +59,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Interfaces\AddGroupWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaces\AddPaymentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Interfaces\AddStudentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -82,13 +90,21 @@
     <Compile Include="Classes\AUTH.cs" />
     <Compile Include="Classes\CarService.cs" />
     <Compile Include="Classes\DB.cs" />
+    <Compile Include="Classes\GroupService.cs" />
     <Compile Include="Classes\IAUTH.cs" />
     <Compile Include="Classes\ILOGGER.cs" />
     <Compile Include="Classes\LOGGER.cs" />
     <Compile Include="Classes\PasswordHasher.cs" />
+    <Compile Include="Classes\PaymentService.cs" />
     <Compile Include="Classes\StudentService.cs" />
     <Compile Include="Interfaces\AddCarWindow.xaml.cs">
       <DependentUpon>AddCarWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\AddGroupWindow.xaml.cs">
+      <DependentUpon>AddGroupWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\AddPaymentWindow.xaml.cs">
+      <DependentUpon>AddPaymentWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\AddStudentWindow.xaml.cs">
       <DependentUpon>AddStudentWindow.xaml</DependentUpon>
@@ -102,8 +118,15 @@
     <Compile Include="Interfaces\ModuleInstructorWindow.xaml.cs">
       <DependentUpon>ModuleInstructorWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Interfaces\StudentPaymentsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\StudentPaymentsWindow.xaml.cs">
+      <DependentUpon>StudentPaymentsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

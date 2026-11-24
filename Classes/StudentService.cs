@@ -84,63 +84,39 @@ namespace DATABASEAUTOSCHOOL.Classes
 
         // Добавление ученика
         public void AddStudent(
-            string lastName,
-            string firstName,
-            string middleName,
-            string phone,
-            string status,
-            int groupId)
+    string lastName,
+    string firstName,
+    string middleName,
+    string phone,
+    int groupId)
         {
-            try
+            using (SqlConnection connection = DB.GetConnection())
             {
-                using (SqlConnection connection = DB.GetConnection())
+                connection.Open();
+
+                string query = @"
+            INSERT INTO Students
+                (LastName, FirstName, MiddleName, Phone, Status, GroupID)
+            VALUES
+                (@LastName, @FirstName, @MiddleName, @Phone, @Status, @GroupID)";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    connection.Open();
+                    command.Parameters.AddWithValue("@LastName", lastName);
+                    command.Parameters.AddWithValue("@FirstName", firstName);
 
-                    string query = @"
-                        INSERT INTO Students
-                        (
-                            LastName,
-                            FirstName,
-                            MiddleName,
-                            Phone,
-                            Status,
-                            GroupID
-                        )
-                        VALUES
-                        (
-                            @LastName,
-                            @FirstName,
-                            @MiddleName,
-                            @Phone,
-                            @Status,
-                            @GroupID
-                        )";
+                    command.Parameters.AddWithValue(
+                        "@MiddleName",
+                        string.IsNullOrWhiteSpace(middleName)
+                            ? (object)DBNull.Value
+                            : middleName);
 
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.Add("@LastName", SqlDbType.NVarChar, 100).Value = lastName.Trim();
-                        command.Parameters.Add("@FirstName", SqlDbType.NVarChar, 100).Value = firstName.Trim();
+                    command.Parameters.AddWithValue("@Phone", phone);
+                    command.Parameters.AddWithValue("@Status", "Обучается");
+                    command.Parameters.AddWithValue("@GroupID", groupId);
 
-                        command.Parameters.Add("@MiddleName", SqlDbType.NVarChar, 100).Value =
-                            string.IsNullOrWhiteSpace(middleName)
-                                ? (object)DBNull.Value
-                                : middleName.Trim();
-
-                        command.Parameters.Add("@Phone", SqlDbType.NVarChar, 60).Value = phone.Trim();
-                        command.Parameters.Add("@Status", SqlDbType.NVarChar, 60).Value = status.Trim();
-                        command.Parameters.Add("@GroupID", SqlDbType.Int).Value = groupId;
-
-                        command.ExecuteNonQuery();
-                    }
+                    command.ExecuteNonQuery();
                 }
-
-                logger.LOG("Добавлен ученик: " + lastName + " " + firstName);
-            }
-            catch (Exception ex)
-            {
-                logger.LOG("Ошибка добавления ученика: " + ex.Message);
-                throw;
             }
         }
 
@@ -271,6 +247,20 @@ namespace DATABASEAUTOSCHOOL.Classes
             {
                 logger.LOG("Ошибка удаления учеников: " + ex.Message);
                 throw;
+            }
+        }
+        // Получение общего количества учеников
+        public int GetStudentsCount()
+        {
+            using (SqlConnection connection = DB.GetConnection())
+            {
+                string query = "SELECT COUNT(*) FROM dbo.Students";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+                    return Convert.ToInt32(command.ExecuteScalar());
+                }
             }
         }
     }
