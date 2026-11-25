@@ -18,24 +18,48 @@ namespace DATABASEAUTOSCHOOL.Classes
             string query = @"
                 SELECT
                     l.LessonID AS [ID],
+                    l.StudentID AS [StudentID],
+                    l.InstructorID AS [InstructorID],
+                    l.CarID AS [CarID],
                     l.LessonDate AS [Дата],
                     CONVERT(varchar(5), l.LessonTime, 108) AS [Время],
-                    LTRIM(RTRIM(CONCAT(
-                        s.LastName, N' ', s.FirstName, N' ',
-                        ISNULL(s.MiddleName, N'')))) AS [Ученик],
-                    LTRIM(RTRIM(CONCAT(
-                        i.LastName, N' ', i.FirstName, N' ',
-                        ISNULL(i.MiddleName, N'')))) AS [Инструктор],
+
+                    CONCAT(
+                        s.LastName, N' ',
+                        LEFT(s.FirstName, 1), N'.',
+                        CASE
+                            WHEN NULLIF(s.MiddleName, N'') IS NOT NULL
+                            THEN CONCAT(LEFT(s.MiddleName, 1), N'.')
+                            ELSE N''
+                        END
+                    ) AS [Ученик],
+
+                    CONCAT(
+                        i.LastName, N' ',
+                        LEFT(i.FirstName, 1), N'.',
+                        CASE
+                            WHEN NULLIF(i.MiddleName, N'') IS NOT NULL
+                            THEN CONCAT(LEFT(i.MiddleName, 1), N'.')
+                            ELSE N''
+                        END
+                    ) AS [Инструктор],
+
                     CONCAT(c.Brand, N' ', c.Model, N' (',
                         c.RegistrationNumber, N')') AS [Автомобиль],
+
                     l.Status AS [Статус]
+
                 FROM dbo.Lessons l
+
                 INNER JOIN dbo.Students s
                     ON l.StudentID = s.StudentID
+
                 INNER JOIN dbo.Instructors i
                     ON l.InstructorID = i.InstructorID
+
                 INNER JOIN dbo.Cars c
                     ON l.CarID = c.CarID
+
                 WHERE
                     @Search = N''
                     OR CONCAT(s.LastName, N' ', s.FirstName, N' ',
@@ -45,6 +69,7 @@ namespace DATABASEAUTOSCHOOL.Classes
                     OR CONCAT(c.Brand, N' ', c.Model) LIKE @Pattern
                     OR c.RegistrationNumber LIKE @Pattern
                     OR l.Status LIKE @Pattern
+
                 ORDER BY l.LessonDate DESC, l.LessonTime DESC";
 
             using (SqlConnection connection = DB.GetConnection())

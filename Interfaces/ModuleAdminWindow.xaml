@@ -202,59 +202,6 @@
         <Grid Grid.Column="1"
               Margin="32,25,32,25">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="65"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-
-            <!-- Заголовок -->
-            <Grid Grid.Row="0">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <StackPanel VerticalAlignment="Center">
-
-                    <TextBlock Text="Панель администратора"
-                               FontSize="22"
-                               FontWeight="SemiBold"
-                               Foreground="{DynamicResource TextColor}"/>
-
-                    <TextBlock Text="Управление информационной системой автошколы"
-                               FontSize="12"
-                               Foreground="{DynamicResource SecondaryTextColor}"
-                               Margin="0,4,0,0"/>
-
-                </StackPanel>
-
-
-                <Border Grid.Column="1"
-                        Background="{DynamicResource SurfaceColor}"
-                        BorderBrush="{DynamicResource BorderColor}"
-                        BorderThickness="1"
-                        CornerRadius="6"
-                        Padding="15,9"
-                        VerticalAlignment="Center">
-
-                    <StackPanel Orientation="Horizontal">
-
-                        <Ellipse Width="8"
-                                 Height="8"
-                                 Fill="#7E9B7B"
-                                 VerticalAlignment="Center"
-                                 Margin="0,0,9,0"/>
-
-                        <TextBlock Text="Администратор"
-                                   Foreground="{DynamicResource TextColor}"
-                                   FontSize="12"
-                                   FontWeight="SemiBold"/>
-
-                    </StackPanel>
-                </Border>
-            </Grid>
 
 
             <!-- Содержимое выбранного раздела -->
@@ -263,96 +210,159 @@
 
 
                 <!-- Главная страница -->
+
                 <ScrollViewer x:Name="DashboardPanel"
-                              VerticalScrollBarVisibility="Auto">
+              VerticalScrollBarVisibility="Auto"
+              HorizontalScrollBarVisibility="Disabled">
 
                     <StackPanel>
 
-                        <TextBlock Text="Добро пожаловать!"
-                                   FontSize="28"
-                                   FontWeight="SemiBold"
-                                   Foreground="{DynamicResource TextColor}"/>
+                        <!-- Заголовок -->
+                        <!-- Заголовок -->
+                        <Grid Margin="0,0,0,22">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="Здесь вы можете управлять основными данными автошколы."
-                                   FontSize="13"
-                                   Foreground="{DynamicResource SecondaryTextColor}"
-                                   Margin="0,7,0,25"
-                                   TextWrapping="Wrap"/>
+                            <!-- Заголовок слева -->
+                            <StackPanel Grid.Column="0"
+                VerticalAlignment="Center">
 
+                                <TextBlock Text="ГЛАВНАЯ / ОБЗОР"
+                   FontSize="10"
+                   FontWeight="Bold"
+                   Foreground="{DynamicResource SecondaryTextColor}"/>
+
+                                <TextBlock Text="Рабочая панель"
+                   FontSize="28"
+                   FontWeight="SemiBold"
+                   Foreground="{DynamicResource TextColor}"
+                   Margin="0,5,0,0"/>
+
+                                <TextBlock Text="Основная информация и инструменты управления"
+                   FontSize="13"
+                   Foreground="{DynamicResource SecondaryTextColor}"
+                   Margin="0,5,0,0"/>
+
+                            </StackPanel>
+
+                            <!-- Статус справа -->
+                            <Border Grid.Column="1"
+            Background="{DynamicResource SurfaceColor}"
+            BorderBrush="{DynamicResource BorderColor}"
+            BorderThickness="1"
+            CornerRadius="6"
+            Padding="15,9"
+            VerticalAlignment="Center">
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Ellipse Width="8"
+                     Height="8"
+                     Fill="#7E9B7B"
+                     VerticalAlignment="Center"
+                     Margin="0,0,9,0"/>
+
+                                    <TextBlock Text="Администратор"
+                       Foreground="{DynamicResource TextColor}"
+                       FontSize="12"
+                       FontWeight="SemiBold"/>
+
+                                </StackPanel>
+                            </Border>
+                        </Grid>
 
                         <!-- Статистика -->
+                        <Grid Margin="0,0,0,14">
+
+                            <TextBlock Text="Общая статистика"
+                       FontSize="18"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextColor}"/>
+
+                        </Grid>
                         <UniformGrid Columns="3"
-                                     Margin="0,0,0,22">
+                     Margin="0,0,0,28">
 
-                            <Border Style="{StaticResource StatCardStyle}"
-                                    Margin="0,0,12,0">
-
+                            <Border Background="{DynamicResource SurfaceColor}"
+                    BorderBrush="{DynamicResource BorderColor}"
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    Padding="19"
+                    Margin="0,0,8,0">
                                 <StackPanel>
-
-                                    <TextBlock Text="УЧЕНИКИ"
-                                               FontSize="10"
-                                               FontWeight="Bold"
-                                               Foreground="{DynamicResource SecondaryTextColor}"/>
-
+                                    <TextBlock Text="01 / УЧЕНИКИ"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               Foreground="{DynamicResource SecondaryTextColor}"/>
 
                                     <TextBlock x:Name="StudentsCountText"
-                                                Text="0"
-                                                FontSize="24"
-                                                FontWeight="SemiBold"
-                                                Foreground="{DynamicResource TextColor}"
-                                                Margin="0,10,0,0"/>
+                               Text="0"
+                               FontSize="34"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextColor}"
+                               Margin="0,14,0,3"/>
 
                                     <TextBlock Text="Всего в системе"
-                                               FontSize="12"
-                                               Foreground="{DynamicResource SecondaryTextColor}"/>
+                               FontSize="12"
+                               Foreground="{DynamicResource SecondaryTextColor}"/>
 
                                 </StackPanel>
                             </Border>
 
 
-                            <Border Style="{StaticResource StatCardStyle}"
-                                    Margin="6,0">
+                            <Border Background="{DynamicResource SurfaceColor}"
+                    BorderBrush="{DynamicResource BorderColor}"
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    Padding="19"
+                    Margin="4,0">
 
                                 <StackPanel>
 
-                                    <TextBlock Text="ИНСТРУКТОРЫ"
-                                               FontSize="10"
-                                               FontWeight="Bold"
-                                               Foreground="{DynamicResource SecondaryTextColor}"/>
+                                    <TextBlock Text="02 / ИНСТРУКТОРЫ"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               Foreground="{DynamicResource SecondaryTextColor}"/>
 
                                     <TextBlock Text="—"
-                                               FontSize="32"
-                                               FontWeight="SemiBold"
-                                               Foreground="{DynamicResource TextColor}"
-                                               Margin="0,10,0,0"/>
+                               FontSize="34"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextColor}"
+                               Margin="0,14,0,3"/>
 
                                     <TextBlock Text="Зарегистрированные"
-                                               FontSize="12"
-                                               Foreground="{DynamicResource SecondaryTextColor}"/>
+                               FontSize="12"
+                               Foreground="{DynamicResource SecondaryTextColor}"/>
 
                                 </StackPanel>
                             </Border>
 
 
-                            <Border Style="{StaticResource StatCardStyle}"
-                                    Margin="12,0,0,0">
+                            <Border Background="{DynamicResource SurfaceColor}"
+                    BorderBrush="{DynamicResource BorderColor}"
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    Padding="19"
+                    Margin="8,0,0,0">
 
                                 <StackPanel>
 
-                                    <TextBlock Text="ЗАНЯТИЯ"
-                                               FontSize="10"
-                                               FontWeight="Bold"
-                                               Foreground="{DynamicResource SecondaryTextColor}"/>
+                                    <TextBlock Text="03 / ЗАНЯТИЯ"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               Foreground="{DynamicResource SecondaryTextColor}"/>
 
                                     <TextBlock Text="—"
-                                               FontSize="32"
-                                               FontWeight="SemiBold"
-                                               Foreground="{DynamicResource TextColor}"
-                                               Margin="0,10,0,0"/>
+                               FontSize="34"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextColor}"
+                               Margin="0,14,0,3"/>
 
                                     <TextBlock Text="Всего в расписании"
-                                               FontSize="12"
-                                               Foreground="{DynamicResource SecondaryTextColor}"/>
+                               FontSize="12"
+                               Foreground="{DynamicResource SecondaryTextColor}"/>
 
                                 </StackPanel>
                             </Border>
@@ -360,54 +370,334 @@
                         </UniformGrid>
 
 
-                        <!-- Быстрый доступ -->
-                        <Border Style="{StaticResource StatCardStyle}"
-                                Padding="25">
+                        <!-- Раздел управления -->
+                        <Grid Margin="0,0,0,15">
 
                             <StackPanel>
 
-                                <TextBlock Text="Быстрый доступ"
-                                           FontSize="18"
-                                           FontWeight="SemiBold"
-                                           Foreground="{DynamicResource TextColor}"
-                                           Margin="0,0,0,8"/>
+                                <TextBlock Text="Управление"
+                           FontSize="19"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextColor}"/>
 
-                                <TextBlock Text="Выберите нужный раздел для управления данными."
-                                           FontSize="13"
-                                           Foreground="{DynamicResource SecondaryTextColor}"
-                                           TextWrapping="Wrap"/>
+                                <TextBlock Text="Выберите необходимый раздел"
+                           FontSize="12"
+                           Foreground="{DynamicResource SecondaryTextColor}"
+                           Margin="0,5,0,0"/>
 
-                                <WrapPanel Margin="0,20,0,0">
-
-                                    <Button Content="Группы"
-                                            Style="{StaticResource AdminActionButtonStyle}"
-                                            Margin="0,0,10,10"
-                                            Click="Groups_Click"/>
-                                    
-                                    <Button Content="Ученики"
-                                            Style="{StaticResource AdminActionButtonStyle}"
-                                            Margin="0,0,10,10"
-                                            Click="Students_Click"/>
-
-                                    <Button Content="Инструкторы"
-                                            Style="{StaticResource AdminActionButtonStyle}"
-                                            Margin="0,0,10,10"
-                                            Click="Instructors_Click"/>
-
-                                    <Button Content="Автомобили"
-                                            Style="{StaticResource AdminActionButtonStyle}"
-                                            Margin="0,0,10,10"
-                                            Click="Cars_Click"/>
-
-                                    <Button Content="Расписание"
-                                            Style="{StaticResource AdminActionButtonStyle}"
-                                            Margin="0,0,10,10"
-                                            Click="Lessons_Click"/>
-
-                                </WrapPanel>
                             </StackPanel>
-                        </Border>
+                        </Grid>
 
+
+                        <!-- Плитки -->
+                        <UniformGrid Columns="2">
+
+                            <!-- Ученики -->
+                            <Button Style="{StaticResource DashboardTileButtonStyle}"
+                    Margin="0,0,8,8"
+                    Click="Students_Click">
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Width="46"
+                            Height="46"
+                            Background="{DynamicResource MutedSurfaceColor}"
+                            CornerRadius="10">
+
+                                        <TextBlock Text="01"
+                                   FontSize="15"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColor}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <StackPanel Grid.Column="1"
+                                Margin="14,0,5,0"
+                                VerticalAlignment="Center">
+
+                                        <TextBlock Text="Ученики"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColor}"/>
+
+                                        <TextBlock Text="Учет и данные учащихся"
+                                   FontSize="11"
+                                   Foreground="{DynamicResource SecondaryTextColor}"
+                                   Margin="0,5,0,0"/>
+
+                                    </StackPanel>
+
+                                    <TextBlock Grid.Column="2"
+                               Text="→"
+                               FontSize="20"
+                               Foreground="{DynamicResource SecondaryTextColor}"
+                               VerticalAlignment="Center"/>
+
+                                </Grid>
+                            </Button>
+
+
+                            <!-- Инструкторы -->
+                            <Button Style="{StaticResource DashboardTileButtonStyle}"
+                    Margin="8,0,0,8"
+                    Click="Instructors_Click">
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Width="46"
+                            Height="46"
+                            Background="{DynamicResource MutedSurfaceColor}"
+                            CornerRadius="10">
+
+                                        <TextBlock Text="02"
+                                   FontSize="15"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColor}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <StackPanel Grid.Column="1"
+                                Margin="14,0,5,0"
+                                VerticalAlignment="Center">
+
+                                        <TextBlock Text="Инструкторы"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColor}"/>
+
+                                        <TextBlock Text="Состав и учет инструкторов"
+                                   FontSize="11"
+                                   Foreground="{DynamicResource SecondaryTextColor}"
+                                   Margin="0,5,0,0"/>
+
+                                    </StackPanel>
+
+                                    <TextBlock Grid.Column="2"
+                               Text="→"
+                               FontSize="20"
+                               Foreground="{DynamicResource SecondaryTextColor}"
+                               VerticalAlignment="Center"/>
+
+                                </Grid>
+                            </Button>
+
+
+                            <!-- Автомобили -->
+                            <Button Style="{StaticResource DashboardTileButtonStyle}"
+                    Margin="0,8,8,8"
+                    Click="Cars_Click">
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Width="46"
+                            Height="46"
+                            Background="{DynamicResource MutedSurfaceColor}"
+                            CornerRadius="10">
+
+                                        <TextBlock Text="03"
+                                   FontSize="15"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColor}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <StackPanel Grid.Column="1"
+                                Margin="14,0,5,0"
+                                VerticalAlignment="Center">
+
+                                        <TextBlock Text="Автомобили"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColor}"/>
+
+                                        <TextBlock Text="Управление автопарком"
+                                   FontSize="11"
+                                   Foreground="{DynamicResource SecondaryTextColor}"
+                                   Margin="0,5,0,0"/>
+
+                                    </StackPanel>
+
+                                    <TextBlock Grid.Column="2"
+                               Text="→"
+                               FontSize="20"
+                               Foreground="{DynamicResource SecondaryTextColor}"
+                               VerticalAlignment="Center"/>
+
+                                </Grid>
+                            </Button>
+
+
+                            <!-- Расписание -->
+                            <Button Style="{StaticResource DashboardTileButtonStyle}"
+                    Margin="8,8,0,8"
+                    Click="Lessons_Click">
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Width="46"
+                            Height="46"
+                            Background="{DynamicResource MutedSurfaceColor}"
+                            CornerRadius="10">
+
+                                        <TextBlock Text="04"
+                                   FontSize="15"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColor}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <StackPanel Grid.Column="1"
+                                Margin="14,0,5,0"
+                                VerticalAlignment="Center">
+
+                                        <TextBlock Text="Расписание"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColor}"/>
+
+                                        <TextBlock Text="Занятия и записи"
+                                   FontSize="11"
+                                   Foreground="{DynamicResource SecondaryTextColor}"
+                                   Margin="0,5,0,0"/>
+
+                                    </StackPanel>
+
+                                    <TextBlock Grid.Column="2"
+                               Text="→"
+                               FontSize="20"
+                               Foreground="{DynamicResource SecondaryTextColor}"
+                               VerticalAlignment="Center"/>
+
+                                </Grid>
+                            </Button>
+
+
+                            <!-- Группы -->
+                            <Button Style="{StaticResource DashboardTileButtonStyle}"
+                    Margin="0,8,8,8"
+                    Click="Groups_Click">
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Width="46"
+                            Height="46"
+                            Background="{DynamicResource MutedSurfaceColor}"
+                            CornerRadius="10">
+
+                                        <TextBlock Text="05"
+                                   FontSize="15"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColor}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <StackPanel Grid.Column="1"
+                                Margin="14,0,5,0"
+                                VerticalAlignment="Center">
+
+                                        <TextBlock Text="Группы"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColor}"/>
+
+                                        <TextBlock Text="Учебные группы и наборы"
+                                   FontSize="11"
+                                   Foreground="{DynamicResource SecondaryTextColor}"
+                                   Margin="0,5,0,0"/>
+
+                                    </StackPanel>
+
+                                    <TextBlock Grid.Column="2"
+                               Text="→"
+                               FontSize="20"
+                               Foreground="{DynamicResource SecondaryTextColor}"
+                               VerticalAlignment="Center"/>
+
+                                </Grid>
+                            </Button>
+
+
+                            <!-- Платежи -->
+                            <Button Style="{StaticResource DashboardTileButtonStyle}"
+                    Margin="8,8,0,8"
+                    Click="Payments_Click">
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Width="46"
+                            Height="46"
+                            Background="{DynamicResource MutedSurfaceColor}"
+                            CornerRadius="10">
+
+                                        <TextBlock Text="06"
+                                   FontSize="15"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColor}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <StackPanel Grid.Column="1"
+                                Margin="14,0,5,0"
+                                VerticalAlignment="Center">
+
+                                        <TextBlock Text="Платежи"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColor}"/>
+
+                                        <TextBlock Text="Учет оплат учеников"
+                                   FontSize="11"
+                                   Foreground="{DynamicResource SecondaryTextColor}"
+                                   Margin="0,5,0,0"/>
+
+                                    </StackPanel>
+
+                                    <TextBlock Grid.Column="2"
+                               Text="→"
+                               FontSize="20"
+                               Foreground="{DynamicResource SecondaryTextColor}"
+                               VerticalAlignment="Center"/>
+
+                                </Grid>
+                            </Button>
+
+                        </UniformGrid>
                     </StackPanel>
                 </ScrollViewer>
 
@@ -448,7 +738,7 @@
                         </Border>
                     </StackPanel>
                 </Border>
-
+                
 
                 <!-- Раздел автомобилей -->
                 <Grid x:Name="CarsPanel"
@@ -558,16 +848,16 @@
                 <!-- Раздел учеников -->
                 <Grid x:Name="StudentsPanel"
       Visibility="Collapsed">
-
+                    
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-
+                    
                     <!-- Заголовок, поиск и действия -->
                     <Grid Grid.Row="0"
           Margin="0,0,0,20">
-
+                        
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
@@ -594,9 +884,8 @@
                      FontSize="13"
                      TextChanged="StudentSearchBox_TextChanged"
                      ToolTip="Поиск по ФИО или телефону"/>
-
                         </StackPanel>
-
+                        
                         <StackPanel Grid.Column="1"
                     Orientation="Horizontal"
                     VerticalAlignment="Center">
@@ -610,6 +899,7 @@
                     Style="{StaticResource LightActionButtonStyle}"
                     Click="EditStudent_Click"
                     Margin="0,0,8,0"/>
+                            
                             <Button Content="Платежи ученика"
                     Style="{StaticResource LightActionButtonStyle}"
                     Click="StudentPayments_Click"
@@ -1151,27 +1441,27 @@
                             <DataGridTextColumn Header="Дата"
                             Binding="{Binding [Дата], StringFormat={}{0:dd.MM.yyyy}}"
                             SortMemberPath="Дата"
-                            Width="110"/>
+                            Width="100"/>
 
                             <DataGridTextColumn Header="Время"
                             Binding="{Binding [Время]}"
                             SortMemberPath="Время"
-                            Width="85"/>
+                            Width="75"/>
 
                             <DataGridTextColumn Header="Ученик"
                             Binding="{Binding [Ученик]}"
                             SortMemberPath="Ученик"
-                            Width="1.3*"/>
+                            Width="1.0*"/>
 
                             <DataGridTextColumn Header="Инструктор"
                             Binding="{Binding [Инструктор]}"
                             SortMemberPath="Инструктор"
-                            Width="1.3*"/>
+                            Width="1.0*"/>
 
                             <DataGridTextColumn Header="Автомобиль"
                             Binding="{Binding [Автомобиль]}"
                             SortMemberPath="Автомобиль"
-                            Width="1.2*"/>
+                            Width="1.3*"/>
 
                             <DataGridTextColumn Header="Статус"
                             Binding="{Binding [Статус]}"

@@ -83,6 +83,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Interfaces\EditLessonWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Interfaces\InvitationCodeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -145,6 +149,9 @@
     <Compile Include="Interfaces\Admin\ModuleAdminWindow.Students.cs" />
     <Compile Include="Interfaces\EditInstructorWindow.xaml.cs">
       <DependentUpon>EditInstructorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\EditLessonWindow.xaml.cs">
+      <DependentUpon>EditLessonWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\InvitationCodeWindow.xaml.cs">
       <DependentUpon>InvitationCodeWindow.xaml</DependentUpon>
