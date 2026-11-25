@@ -218,7 +218,6 @@
                     <StackPanel>
 
                         <!-- Заголовок -->
-                        <!-- Заголовок -->
                         <Grid Margin="0,0,0,22">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -326,11 +325,12 @@
                                FontWeight="Bold"
                                Foreground="{DynamicResource SecondaryTextColor}"/>
 
-                                    <TextBlock Text="—"
-                               FontSize="34"
-                               FontWeight="SemiBold"
-                               Foreground="{DynamicResource TextColor}"
-                               Margin="0,14,0,3"/>
+                                    <TextBlock x:Name="DashboardInstructorsCountText"
+           Text="0"
+           FontSize="34"
+           FontWeight="SemiBold"
+           Foreground="{DynamicResource TextColor}"
+           Margin="0,14,0,3"/>
 
                                     <TextBlock Text="Зарегистрированные"
                                FontSize="12"
@@ -354,11 +354,12 @@
                                FontWeight="Bold"
                                Foreground="{DynamicResource SecondaryTextColor}"/>
 
-                                    <TextBlock Text="—"
-                               FontSize="34"
-                               FontWeight="SemiBold"
-                               Foreground="{DynamicResource TextColor}"
-                               Margin="0,14,0,3"/>
+                                    <TextBlock x:Name="DashboardLessonsCountText"
+           Text="0"
+           FontSize="34"
+           FontWeight="SemiBold"
+           Foreground="{DynamicResource TextColor}"
+           Margin="0,14,0,3"/>
 
                                     <TextBlock Text="Всего в расписании"
                                FontSize="12"
@@ -848,16 +849,16 @@
                 <!-- Раздел учеников -->
                 <Grid x:Name="StudentsPanel"
       Visibility="Collapsed">
-                    
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    
+
                     <!-- Заголовок, поиск и действия -->
                     <Grid Grid.Row="0"
           Margin="0,0,0,20">
-                        
+
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
@@ -885,7 +886,7 @@
                      TextChanged="StudentSearchBox_TextChanged"
                      ToolTip="Поиск по ФИО или телефону"/>
                         </StackPanel>
-                        
+
                         <StackPanel Grid.Column="1"
                     Orientation="Horizontal"
                     VerticalAlignment="Center">
@@ -899,7 +900,7 @@
                     Style="{StaticResource LightActionButtonStyle}"
                     Click="EditStudent_Click"
                     Margin="0,0,8,0"/>
-                            
+
                             <Button Content="Платежи ученика"
                     Style="{StaticResource LightActionButtonStyle}"
                     Click="StudentPayments_Click"
@@ -968,6 +969,553 @@
                     </Border>
 
                 </Grid>
+                
+                <!-- Раздел отчётов -->
+
+                <!-- Раздел отчётов -->
+                <Grid x:Name="ReportsPanel"
+      Visibility="Collapsed">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Заголовок -->
+                    <StackPanel Grid.Row="0"
+                Margin="0,0,0,20">
+
+                        <TextBlock Text="Отчёты"
+                   FontSize="26"
+                   FontWeight="SemiBold"
+                   Foreground="{DynamicResource TextColor}"/>
+
+                        <TextBlock Text="Аналитика и формирование документов автошколы"
+                   FontSize="13"
+                   Foreground="{DynamicResource SecondaryTextColor}"
+                   Margin="0,5,0,0"/>
+                    </StackPanel>
+
+                    <!-- Переключение разделов -->
+                    <StackPanel Grid.Row="1"
+                Orientation="Horizontal"
+                Margin="0,0,0,20">
+
+                        <Button x:Name="ReportsAnalyticsButton"
+                Content="Аналитика"
+                Style="{StaticResource AdminActionButtonStyle}"
+                Click="ReportsAnalytics_Click"
+                Margin="0,0,10,0"/>
+
+                        <Button x:Name="ReportsExamButton"
+                Content="Экзаменационный список"
+                Style="{StaticResource LightActionButtonStyle}"
+                Click="ReportsExam_Click"/>
+                    </StackPanel>
+
+                    <!-- Аналитика -->
+                    <Grid x:Name="ReportsAnalyticsPanel"
+          Grid.Row="2">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Основные показатели -->
+                        <Grid Grid.Row="0"
+              Margin="0,0,0,20">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0"
+                    Background="{DynamicResource SurfaceColor}"
+                    BorderBrush="{DynamicResource BorderColor}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="20"
+                    Margin="0,0,10,0">
+
+                                <StackPanel>
+                                    <TextBlock Text="ПРОВЕДЕНО ЗАНЯТИЙ"
+                               FontSize="11"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource SecondaryTextColor}"/>
+
+                                    <TextBlock x:Name="ReportCompletedLessonsText"
+                               Text="—"
+                               FontSize="30"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextColor}"
+                               Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="1"
+                    Background="{DynamicResource SurfaceColor}"
+                    BorderBrush="{DynamicResource BorderColor}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="20"
+                    Margin="10,0,0,0">
+
+                                <StackPanel>
+                                    <TextBlock Text="ПОЛУЧЕНО ОПЛАТ"
+                               FontSize="11"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource SecondaryTextColor}"/>
+
+                                    <TextBlock x:Name="ReportPaymentsSumText"
+                               Text="—"
+                               FontSize="30"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextColor}"
+                               Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <!-- Графики -->
+                        <Grid Grid.Row="1">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Row="0"
+                    Grid.Column="0"
+                    Background="{DynamicResource SurfaceColor}"
+                    BorderBrush="{DynamicResource BorderColor}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="20"
+                    Margin="0,0,10,10">
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Text="Распределение занятий"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextColor}"/>
+
+                                    <Canvas x:Name="LessonStatusChart"
+                            Grid.Row="1"
+                            Margin="0,15,0,0"/>
+                                </Grid>
+                            </Border>
+
+                            <Border Grid.Row="0"
+                    Grid.Column="1"
+                    Background="{DynamicResource SurfaceColor}"
+                    BorderBrush="{DynamicResource BorderColor}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="20"
+                    Margin="10,0,0,10">
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Text="Поступления за 6 месяцев"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextColor}"/>
+
+                                    <Canvas x:Name="MonthlyPaymentsChart"
+                            Grid.Row="1"
+                            Margin="0,15,0,0"/>
+                                </Grid>
+                            </Border>
+
+                            <Border Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    Background="{DynamicResource SurfaceColor}"
+                    BorderBrush="{DynamicResource BorderColor}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="20"
+                    Margin="0,10,0,0">
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Text="Занятия по инструкторам"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextColor}"/>
+
+                                    <Canvas x:Name="InstructorLessonsChart"
+                            Grid.Row="1"
+                            Margin="0,15,0,0"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Grid>
+
+                    <!-- Экзаменационный список -->
+
+                    <!-- Экзаменационный список -->
+                    <Grid x:Name="ReportsExamPanel"
+      Grid.Row="2"
+      Visibility="Collapsed">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Параметры формирования -->
+                        <Border Grid.Row="0"
+            Background="{DynamicResource SurfaceColor}"
+            BorderBrush="{DynamicResource BorderColor}"
+            BorderThickness="1"
+            CornerRadius="8"
+            Padding="20"
+            Margin="0,0,0,18">
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0"
+                        Margin="0,0,20,0">
+
+                                    <TextBlock Text="Формирование экзаменационного списка"
+                           FontSize="18"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextColor}"/>
+
+                                    <TextBlock Text="Выберите учебную группу, чтобы подготовить список учеников к экзамену."
+                           FontSize="12"
+                           Foreground="{DynamicResource SecondaryTextColor}"
+                           Margin="0,6,0,14"/>
+
+                                    <TextBlock Text="УЧЕБНАЯ ГРУППА"
+                           FontSize="11"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource SecondaryTextColor}"
+                           Margin="0,0,0,7"/>
+
+                                    <ComboBox x:Name="ExamGroupComboBox"
+                                            Height="40"
+                                            Padding="9,5"
+                                            VerticalContentAlignment="Center"
+                                            SelectedValuePath="ID"
+                                            ToolTip="Выберите учебную группу">
+
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding [Название группы]}"/>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+
+                                    </ComboBox>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1">
+
+                                    <TextBlock Text="ДАТА ЭКЗАМЕНА"
+                           FontSize="11"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource SecondaryTextColor}"
+                           Margin="0,0,0,7"/>
+
+
+                                    <Grid x:Name="ExamDateField">
+
+                                        <Border Height="40"
+            Background="#FBFAF7"
+            BorderBrush="#E2E0D8"
+            BorderThickness="1"
+            CornerRadius="6"/>
+
+                                        <Button Height="40"
+            Background="Transparent"
+            BorderThickness="0"
+            Cursor="Hand"
+            Click="ExamCalendarToggleButton_Click">
+
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="45"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock x:Name="ExamDateText"
+                       Grid.Column="0"
+                       Text="Выберите дату"
+                       FontSize="14"
+                       Foreground="#293330"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Margin="12,0,0,0"/>
+
+                                                <TextBlock Grid.Column="1"
+                       Text="▦"
+                       FontSize="19"
+                       Foreground="#737D76"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </Button>
+
+                                        <Popup x:Name="ExamCalendarPopup"
+           PlacementTarget="{Binding ElementName=ExamDateField}"
+           Placement="Bottom"
+           VerticalOffset="5"
+           StaysOpen="False"
+           AllowsTransparency="True"
+           PopupAnimation="Fade">
+
+                                            <Border Width="310"
+                Background="#FAF9F6"
+                BorderBrush="#E2E0D8"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="15">
+
+                                                <StackPanel>
+
+                                                    <Grid Margin="0,0,0,12">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="40"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="40"/>
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <Button Grid.Column="0"
+                            Content="‹"
+                            FontSize="24"
+                            Style="{StaticResource CalendarArrowButtonStyle}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Click="ExamPreviousMonth_Click"/>
+
+                                                        <TextBlock x:Name="ExamCalendarMonthText"
+                               Grid.Column="1"
+                               FontSize="15"
+                               FontWeight="SemiBold"
+                               Foreground="#293330"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+
+                                                        <Button Grid.Column="2"
+                            Content="›"
+                            FontSize="24"
+                            Style="{StaticResource CalendarArrowButtonStyle}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Click="ExamNextMonth_Click"/>
+                                                    </Grid>
+
+                                                    <UniformGrid Columns="7"
+                             Margin="0,0,0,7">
+                                                        <TextBlock Text="Пн" Foreground="#737D76" TextAlignment="Center" FontSize="12"/>
+                                                        <TextBlock Text="Вт" Foreground="#737D76" TextAlignment="Center" FontSize="12"/>
+                                                        <TextBlock Text="Ср" Foreground="#737D76" TextAlignment="Center" FontSize="12"/>
+                                                        <TextBlock Text="Чт" Foreground="#737D76" TextAlignment="Center" FontSize="12"/>
+                                                        <TextBlock Text="Пт" Foreground="#737D76" TextAlignment="Center" FontSize="12"/>
+                                                        <TextBlock Text="Сб" Foreground="#737D76" TextAlignment="Center" FontSize="12"/>
+                                                        <TextBlock Text="Вс" Foreground="#737D76" TextAlignment="Center" FontSize="12"/>
+                                                    </UniformGrid>
+
+                                                    <UniformGrid x:Name="ExamCalendarDaysPanel"
+                             Columns="7"/>
+
+                                                </StackPanel>
+                                            </Border>
+                                        </Popup>
+                                    </Grid>
+
+
+                                    <Button x:Name="GenerateExamListButton"
+                        Content="Сформировать список"
+                        Style="{StaticResource AdminActionButtonStyle}"
+                        Click="GenerateExamList_Click"
+                        Height="40"
+                        Margin="0,12,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Заголовок списка -->
+                        <Grid Grid.Row="1"
+          Margin="0,0,0,12">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel>
+                                <TextBlock Text="Ученики группы"
+                       FontSize="17"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextColor}"/>
+
+                                <TextBlock Text="Список для регистрации участников экзамена"
+                       FontSize="12"
+                       Foreground="{DynamicResource SecondaryTextColor}"
+                       Margin="0,4,0,0"/>
+                            </StackPanel>
+
+                            <Border Grid.Column="1"
+                Background="{DynamicResource MutedSurfaceColor}"
+                CornerRadius="8"
+                Padding="12,7"
+                VerticalAlignment="Center">
+
+                                <TextBlock x:Name="ExamStudentsCountText"
+                       Text="0 учеников"
+                       FontSize="12"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextColor}"/>
+                            </Border>
+                        </Grid>
+
+                        <!-- Таблица или пустое состояние -->
+                        <Border Grid.Row="2"
+            Background="{DynamicResource SurfaceColor}"
+            BorderBrush="{DynamicResource BorderColor}"
+            BorderThickness="1"
+            CornerRadius="8"
+            Padding="15">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Заголовок документа -->
+                                <StackPanel Grid.Row="0"
+                        Margin="5,0,5,15">
+
+                                    <TextBlock x:Name="ExamListTitle"
+                           Text="Экзаменационный список"
+                           FontSize="17"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextColor}"/>
+
+                                    <TextBlock x:Name="ExamListDate"
+                           Text="Дата экзамена не указана"
+                           FontSize="12"
+                           Foreground="{DynamicResource SecondaryTextColor}"
+                           Margin="0,5,0,0"/>
+                                </StackPanel>
+
+                                <!-- Пустое состояние -->
+                                <Border x:Name="ExamEmptyState"
+                    Grid.Row="1"
+                    Background="{DynamicResource MutedSurfaceColor}"
+                    CornerRadius="8"
+                    Padding="20">
+
+                                    <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+
+                                        <TextBlock Text="☷"
+                               FontSize="42"
+                               Foreground="{DynamicResource AccentColor}"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,12"/>
+
+                                        <TextBlock Text="Список ещё не сформирован"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextColor}"
+                               HorizontalAlignment="Center"/>
+
+                                        <TextBlock Text="Выберите учебную группу и нажмите «Сформировать список»."
+                               FontSize="12"
+                               Foreground="{DynamicResource SecondaryTextColor}"
+                               TextAlignment="Center"
+                               Margin="0,8,0,0"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Таблица учеников -->
+                                <DataGrid x:Name="ExamStudentsGrid"
+                      Grid.Row="1"
+                      Visibility="Collapsed"
+                      Style="{StaticResource ModernDataGridStyle}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      HeadersVisibility="Column"
+                      SelectionMode="Single">
+
+                                    <DataGrid.Columns>
+
+                                        <DataGridTextColumn Header="№"
+                                        Binding="{Binding [№]}"
+                                        Width="65"/>
+
+                                        <DataGridTextColumn Header="ФИО ученика"
+                                        Binding="{Binding [ФИО]}"
+                                        Width="2*"/>
+
+                                        <DataGridTextColumn Header="Подпись ученика"
+                                        Binding="{Binding [Подпись]}"
+                                        Width="2*"/>
+
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <!-- Нижняя панель -->
+                                <Grid Grid.Row="2"
+                  Margin="5,15,5,0">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="Подпись экзаменатора: __________________________"
+                           VerticalAlignment="Center"
+                           FontSize="12"
+                           Foreground="{DynamicResource TextColor}"/>
+
+                                    <Button x:Name="PrintExamListButton"
+                        Grid.Column="1"
+                        Content="Печать списка"
+                        Style="{StaticResource AdminActionButtonStyle}"
+                        Click="PrintExamList_Click"
+                        Visibility="Collapsed"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                </Grid>
+
 
                 <!-- Раздел групп -->
                 <Grid x:Name="GroupsPanel"
@@ -1078,6 +1626,7 @@
                     </Border>
 
                 </Grid>
+                
                 <!-- Раздел платежей -->
                 <Grid x:Name="PaymentsPanel"
       Visibility="Collapsed">
@@ -1129,10 +1678,59 @@
                     Click="AddPayment_Click"
                     Margin="0,0,8,0"/>
 
-                            <Button Content="Изменить"
-                    Style="{StaticResource LightActionButtonStyle}"
-                    Click="EditPayment_Click"
-                    Margin="0,0,8,0"/>
+
+                            <Button x:Name="EditPaymentButton"
+        Content="Изменить статус"
+        Style="{StaticResource LightActionButtonStyle}"
+        Click="EditPayment_Click"
+        Margin="0,0,8,0">
+
+
+                                <Button.ContextMenu>
+                                    <ContextMenu Width="190"
+             Background="#FAF9F6"
+             BorderBrush="#E2E0D8"
+             BorderThickness="1"
+             Padding="5"
+             HasDropShadow="True"
+             SnapsToDevicePixels="True">
+
+                                        <ContextMenu.Template>
+                                            <ControlTemplate TargetType="{x:Type ContextMenu}">
+                                                <Border Background="#FAF9F6"
+                    BorderBrush="#E2E0D8"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="5"
+                    SnapsToDevicePixels="True">
+
+                                                    <StackPanel IsItemsHost="True"
+                            KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </ContextMenu.Template>
+
+                                        <ContextMenu.Resources>
+                                            <!-- Здесь оставь свой текущий Style MenuItem -->
+                                        </ContextMenu.Resources>
+
+                                        <MenuItem Header="Оплачен"
+              Tag="Оплачен"
+              Click="PaymentStatusMenuItem_Click"/>
+
+                                        <MenuItem Header="Ожидает оплаты"
+              Tag="Ожидает оплаты"
+              Click="PaymentStatusMenuItem_Click"/>
+
+                                        <MenuItem Header="Отменён"
+              Tag="Отменён"
+              Click="PaymentStatusMenuItem_Click"/>
+
+                                    </ContextMenu>
+                                </Button.ContextMenu>
+
+                            </Button>
+
 
                             <Button Content="Удалить"
                     Style="{StaticResource DeleteActionButtonStyle}"
@@ -1197,9 +1795,78 @@
                     </Border>
 
                 </Grid>
+                <Grid x:Name="SettingsPanel"
+      Visibility="Collapsed">
 
-                <!--/таблица инструктора-->
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
+                    <StackPanel Grid.Row="0"
+                Margin="0,0,0,20">
+
+                        <TextBlock Text="Настройки"
+                   FontSize="26"
+                   FontWeight="SemiBold"
+                   Foreground="{DynamicResource TextColor}"/>
+
+                        <TextBlock Text="Управление стоимостью обучения в автошколе"
+                   FontSize="13"
+                   Foreground="{DynamicResource SecondaryTextColor}"
+                   Margin="0,5,0,0"/>
+
+                    </StackPanel>
+
+                    <Border Grid.Row="1"
+            Background="{DynamicResource SurfaceColor}"
+            CornerRadius="8"
+            BorderBrush="{DynamicResource BorderColor}"
+            BorderThickness="1"
+            Padding="25"
+            VerticalAlignment="Top">
+
+                        <StackPanel MaxWidth="500"
+                    HorizontalAlignment="Left">
+
+                            <TextBlock Text="Стоимость обучения"
+                       FontSize="17"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextColor}"/>
+
+                            <TextBlock Text="Единая стоимость обучения для всех учебных групп."
+                       FontSize="12"
+                       Foreground="{DynamicResource SecondaryTextColor}"
+                       Margin="0,6,0,20"/>
+
+                            <TextBlock Text="Сумма, ₽"
+                       FontSize="12"
+                       FontWeight="Medium"
+                       Foreground="{DynamicResource SecondaryTextColor}"
+                       Margin="0,0,0,7"/>
+
+                            <TextBox x:Name="TuitionCostTextBox"
+                     Width="250"
+                     Height="42"
+                     HorizontalAlignment="Left"
+                     VerticalContentAlignment="Center"
+                     Padding="12,0"
+                     FontSize="15"/>
+
+                            <Button Content="Сохранить изменения"
+                    Width="190"
+                    Height="40"
+                    HorizontalAlignment="Left"
+                    Margin="0,22,0,0"
+                    Style="{StaticResource AdminActionButtonStyle}"
+                    Click="SaveTuitionCost_Click"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                </Grid>
+                <!-- Таблица инструктора-->
                 <Grid x:Name="InstructorsPanel" Visibility="Collapsed">
 
                     <Grid.RowDefinitions>
@@ -1353,7 +2020,7 @@
                     </DataGrid>
 
                 </Grid>
-
+                
                 <Grid x:Name="LessonsPanel" Visibility="Collapsed">
 
                     <Grid.RowDefinitions>

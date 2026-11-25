@@ -115,11 +115,14 @@
     <Compile Include="Classes\ILOGGER.cs" />
     <Compile Include="Classes\InstructorDashboardServices.cs" />
     <Compile Include="Classes\InstructorInvitationService.cs" />
+    <Compile Include="Classes\InstructorProfileService.cs" />
     <Compile Include="Classes\InstructorServices.cs" />
+    <Compile Include="Classes\InstructorStudentsService.cs" />
     <Compile Include="Classes\LessonService.cs" />
     <Compile Include="Classes\LOGGER.cs" />
     <Compile Include="Classes\PasswordHasher.cs" />
     <Compile Include="Classes\PaymentService.cs" />
+    <Compile Include="Classes\ReportService.cs" />
     <Compile Include="Classes\StudentService.cs" />
     <Compile Include="Classes\UserService.cs" />
     <Compile Include="Interfaces\AddCarWindow.xaml.cs">
@@ -141,11 +144,14 @@
       <DependentUpon>AddStudentWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\Admin\ModuleAdminWindow.Cars.cs" />
+    <Compile Include="Interfaces\Admin\ModuleAdminWindow.Exam.cs" />
     <Compile Include="Interfaces\Admin\ModuleAdminWindow.Groups.cs" />
     <Compile Include="Interfaces\Admin\ModuleAdminWindow.Instructors.cs" />
     <Compile Include="Interfaces\Admin\ModuleAdminWindow.Lessons.cs" />
     <Compile Include="Interfaces\Admin\ModuleAdminWindow.Navigation.cs" />
     <Compile Include="Interfaces\Admin\ModuleAdminWindow.Payments.cs" />
+    <Compile Include="Interfaces\Admin\ModuleAdminWindow.Reports.cs" />
+    <Compile Include="Interfaces\Admin\ModuleAdminWindow.Settings.cs" />
     <Compile Include="Interfaces\Admin\ModuleAdminWindow.Students.cs" />
     <Compile Include="Interfaces\EditInstructorWindow.xaml.cs">
       <DependentUpon>EditInstructorWindow.xaml</DependentUpon>

@@ -164,5 +164,18 @@ namespace DATABASEAUTOSCHOOL.Interfaces
                     MessageBoxImage.Error);
             }
         }
+        // Загрузка количества занятий
+        private void LoadLessonsCount()
+        {
+            try
+            {
+                DashboardLessonsCountText.Text =
+                    lessonService.GetLessonsCount().ToString();
+            }
+            catch (Exception ex)
+            {
+                logger.LOG("Ошибка загрузки количества занятий: " + ex.Message);
+            }
+        }
     }
 }

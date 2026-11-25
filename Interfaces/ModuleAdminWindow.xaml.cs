@@ -20,6 +20,9 @@ namespace DATABASEAUTOSCHOOL.Interfaces
         private readonly InstructorInvitationService invitationService = new InstructorInvitationService();
         private readonly UserService userService = new UserService();
         private readonly LessonService lessonService = new LessonService();
+        private readonly ReportService reportService = new ReportService();
+        private readonly InstructorStudentsService studentsService = new InstructorStudentsService();
+
         private readonly LOGGER logger = new LOGGER();
 
         public ModuleAdminWindow()
@@ -28,6 +31,8 @@ namespace DATABASEAUTOSCHOOL.Interfaces
             logger.LOG("Открыта панель администратора.");
 
             LoadStudentsCount();
+            LoadInstructorsCount();
+            LoadLessonsCount();
 
             Dashboard_Click(null, null);
         }

@@ -89,6 +89,59 @@ namespace DATABASEAUTOSCHOOL.Classes
 
             return table;
         }
+        public DataTable GetInstructorLessons(int instructorId)
+        {
+            DataTable table = new DataTable();
+
+            string query = @"
+        SELECT
+            l.LessonID AS [ID],
+            l.LessonDate AS [Дата],
+            CONVERT(varchar(5), l.LessonTime, 108) AS [Время],
+
+            CONCAT(
+                s.LastName, N' ',
+                LEFT(s.FirstName, 1), N'.',
+                CASE
+                    WHEN NULLIF(s.MiddleName, N'') IS NOT NULL
+                    THEN CONCAT(LEFT(s.MiddleName, 1), N'.')
+                    ELSE N''
+                END
+            ) AS [Ученик],
+
+            CONCAT(
+                c.Brand, N' ', c.Model, N' (',
+                c.RegistrationNumber, N')'
+            ) AS [Автомобиль],
+
+            l.Status AS [Статус]
+
+        FROM dbo.Lessons l
+
+        INNER JOIN dbo.Students s
+            ON l.StudentID = s.StudentID
+
+        INNER JOIN dbo.Cars c
+            ON l.CarID = c.CarID
+
+        WHERE l.InstructorID = @InstructorID
+
+        ORDER BY l.LessonDate ASC, l.LessonTime ASC";
+
+            using (SqlConnection connection = DB.GetConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@InstructorID", SqlDbType.Int).Value =
+                    instructorId;
+
+                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                {
+                    adapter.Fill(table);
+                }
+            }
+
+            return table;
+        }
 
         public DataTable GetStudents()
         {
@@ -133,7 +186,174 @@ namespace DATABASEAUTOSCHOOL.Classes
 
             return table;
         }
+        public DataTable GetInstructorLessonsByMonth(int instructorId, DateTime month)
+        {
+            DataTable table = new DataTable();
 
+            DateTime monthStart = new DateTime(
+                month.Year,
+                month.Month,
+                1);
+
+            DateTime nextMonth = monthStart.AddMonths(1);
+
+            string query = @"
+        SELECT
+            l.LessonID AS [ID],
+            l.LessonDate AS [Дата],
+            CONVERT(varchar(5), l.LessonTime, 108) AS [Время],
+
+            CONCAT(
+                s.LastName, N' ',
+                LEFT(s.FirstName, 1), N'.',
+                CASE
+                    WHEN NULLIF(s.MiddleName, N'') IS NOT NULL
+                    THEN CONCAT(LEFT(s.MiddleName, 1), N'.')
+                    ELSE N''
+                END
+            ) AS [Ученик],
+
+            CONCAT(
+                c.Brand, N' ', c.Model
+            ) AS [Автомобиль],
+
+            c.RegistrationNumber AS [Госномер],
+
+            l.Status AS [Статус]
+
+        FROM dbo.Lessons l
+
+        INNER JOIN dbo.Students s
+            ON l.StudentID = s.StudentID
+
+        INNER JOIN dbo.Cars c
+            ON l.CarID = c.CarID
+
+        WHERE
+            l.InstructorID = @InstructorID
+            AND l.LessonDate >= @MonthStart
+            AND l.LessonDate < @NextMonth
+
+        ORDER BY
+            l.LessonDate ASC,
+            l.LessonTime ASC";
+
+            using (SqlConnection connection = DB.GetConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@InstructorID", SqlDbType.Int).Value =
+                    instructorId;
+
+                command.Parameters.Add("@MonthStart", SqlDbType.Date).Value =
+                    monthStart;
+
+                command.Parameters.Add("@NextMonth", SqlDbType.Date).Value =
+                    nextMonth;
+
+                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                {
+                    adapter.Fill(table);
+                }
+            }
+
+            return table;
+        }
+        public void UpdateInstructorLessonStatus(int lessonId, int instructorId, string status)
+        {
+            if (status != "запланировано" &&
+                status != "проведено" &&
+                status != "отменено")
+            {
+                throw new InvalidOperationException(
+                    "Указан некорректный статус занятия.");
+            }
+
+            using (SqlConnection connection = DB.GetConnection())
+            {
+                connection.Open();
+
+                using (SqlTransaction transaction =
+                    connection.BeginTransaction(IsolationLevel.Serializable))
+                {
+                    try
+                    {
+                        DateTime lessonDate;
+                        TimeSpan lessonTime;
+                        string selectQuery = @"
+                            SELECT LessonDate, LessonTime, Status
+                            FROM dbo.Lessons WITH (UPDLOCK, HOLDLOCK)
+                            WHERE LessonID = @LessonID
+                              AND InstructorID = @InstructorID";
+
+                        using (SqlCommand command =
+                            new SqlCommand(selectQuery, connection, transaction))
+                        {
+                            command.Parameters.Add("@LessonID", SqlDbType.Int).Value =
+                                lessonId;
+
+                            command.Parameters.Add("@InstructorID", SqlDbType.Int).Value =
+                                instructorId;
+
+                            string currentStatus;
+
+                            using (SqlDataReader reader = command.ExecuteReader())
+                            {
+                                if (!reader.Read())
+                                {
+                                    throw new InvalidOperationException(
+                                        "Занятие не найдено или оно не принадлежит вам.");
+                                }
+
+                                lessonDate = Convert.ToDateTime(reader["LessonDate"]);
+                                lessonTime = (TimeSpan)reader["LessonTime"];
+                                currentStatus = reader["Status"].ToString();
+                            }
+                            if (currentStatus == "проведено")
+                            {
+                                throw new InvalidOperationException(
+                                    "Проведённое занятие нельзя изменить.");
+                            }
+                        }
+
+                        DateTime lessonStart = lessonDate.Date.Add(lessonTime);
+
+                        if (status == "проведено" && lessonStart > DateTime.Now)
+                        {
+                            throw new InvalidOperationException(
+                                "Нельзя отметить будущее занятие как проведённое.");
+                        }
+
+                        string updateQuery = @"
+                    UPDATE dbo.Lessons
+                    SET Status = @Status
+                    WHERE LessonID = @LessonID
+                      AND InstructorID = @InstructorID";
+
+                        using (SqlCommand command =
+                            new SqlCommand(updateQuery, connection, transaction))
+                        {
+                            command.Parameters.Add("@Status", SqlDbType.NVarChar, 60).Value =
+                                status;
+
+                            command.Parameters.Add("@LessonID", SqlDbType.Int).Value =
+                                lessonId;
+
+                            command.Parameters.Add("@InstructorID", SqlDbType.Int).Value =
+                                instructorId;
+
+                            command.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
         public DataTable GetCars()
         {
             DataTable table = new DataTable();
@@ -456,6 +676,19 @@ namespace DATABASEAUTOSCHOOL.Classes
 
             command.Parameters.Add("@Status", SqlDbType.NVarChar, 60).Value =
                 status;
+        }
+        public int GetLessonsCount()
+        {
+            using (SqlConnection connection = DB.GetConnection())
+            {
+                string query = "SELECT COUNT(*) FROM dbo.Lessons";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+                    return Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
         }
     }
 }

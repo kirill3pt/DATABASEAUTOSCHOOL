@@ -165,10 +165,85 @@ namespace DATABASEAUTOSCHOOL.Interfaces
         }
 
         // Изменение платежа
+
         private void EditPayment_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(
-                "Форма изменения платежа будет подключена следующим шагом.");
+            if (PaymentsDataGrid.SelectedItems.Count == 0)
+            {
+                MessageBox.Show(
+                    "Выберите платёж для изменения статуса.",
+                    "Внимание",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            if (PaymentsDataGrid.SelectedItems.Count > 1)
+            {
+                MessageBox.Show(
+                    "Для изменения статуса выберите только один платёж.",
+                    "Внимание",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            ContextMenu menu = EditPaymentButton.ContextMenu;
+
+            menu.PlacementTarget = EditPaymentButton;
+            menu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+            menu.IsOpen = true;
         }
+
+
+        private void PaymentStatusMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem item = sender as MenuItem;
+
+            if (item == null)
+                return;
+
+            DataRowView row = PaymentsDataGrid.SelectedItem as DataRowView;
+
+            if (row == null)
+                return;
+
+            int paymentId = Convert.ToInt32(row["ID"]);
+            string currentStatus = row["Статус"].ToString();
+            string newStatus = item.Tag.ToString();
+
+            if (currentStatus == newStatus)
+                return;
+
+            try
+            {
+                paymentService.UpdatePaymentStatus(paymentId, newStatus);
+
+                LoadPayments(PaymentSearchBox.Text);
+
+                logger.LOG(
+                    "Изменён статус платежа ID " + paymentId +
+                    ". Новый статус: " + newStatus);
+
+                MessageBox.Show(
+                    "Статус платежа успешно изменён.",
+                    "Готово",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                logger.LOG("Ошибка изменения статуса платежа: " + ex);
+
+                MessageBox.Show(
+                    "Не удалось изменить статус платежа:\n\n" + ex.Message,
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+
     }
 }

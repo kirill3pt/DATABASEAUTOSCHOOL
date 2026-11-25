@@ -47,12 +47,16 @@ namespace DATABASEAUTOSCHOOL.Interfaces
         {
             DashboardPanel.Visibility = Visibility.Collapsed;
             SectionPanel.Visibility = Visibility.Collapsed;
+
             GroupsPanel.Visibility = Visibility.Collapsed;
             CarsPanel.Visibility = Visibility.Collapsed;
             StudentsPanel.Visibility = Visibility.Collapsed;
             PaymentsPanel.Visibility = Visibility.Collapsed;
             InstructorsPanel.Visibility = Visibility.Collapsed;
             LessonsPanel.Visibility = Visibility.Collapsed;
+
+            ReportsPanel.Visibility = Visibility.Collapsed;
+            SettingsPanel.Visibility = Visibility.Collapsed;
         }
 
         private void ShowPanel(Grid panel)
@@ -101,19 +105,23 @@ namespace DATABASEAUTOSCHOOL.Interfaces
         // Отчёты
         private void Reports_Click(object sender, RoutedEventArgs e)
         {
-            ShowSection(
-                "Отчёты",
-                "Формирование и сохранение Excel-отчётов по работе автошколы.",
-                ReportsButton);
+            SetActiveButton(ReportsButton);
+            HideAllPanels();
+
+            ShowPanel(ReportsPanel);
+
+            LoadReportsStatistics();
         }
 
         // Настройки
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
-            ShowSection(
-                "Настройки",
-                "Настройка приложения и параметров журналирования.",
-                SettingsButton);
+            SetActiveButton(SettingsButton);
+            HideAllPanels();
+
+            ShowPanel(SettingsPanel);
+
+            LoadTuitionCost();
         }
 
         // О программе

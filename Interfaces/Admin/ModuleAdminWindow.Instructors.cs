@@ -314,5 +314,18 @@ namespace DATABASEAUTOSCHOOL.Interfaces
                     MessageBoxImage.Error);
             }
         }
+        // Загрузка количества инструкторов
+        private void LoadInstructorsCount()
+        {
+            try
+            {
+                DashboardInstructorsCountText.Text =
+                    instructorService.GetInstructorsCount().ToString();
+            }
+            catch (Exception ex)
+            {
+                logger.LOG("Ошибка загрузки количества инструкторов: " + ex.Message);
+            }
+        }
     }
 }

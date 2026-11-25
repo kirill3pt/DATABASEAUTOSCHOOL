@@ -245,5 +245,18 @@ namespace DATABASEAUTOSCHOOL.Classes
                 }
             }
         }
+        public int GetInstructorsCount()
+        {
+            using (SqlConnection connection = DB.GetConnection())
+            {
+                string query = "SELECT COUNT(*) FROM dbo.Instructors";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+                    return Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
+        }
     }
 }

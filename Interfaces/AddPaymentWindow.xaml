@@ -8,6 +8,56 @@
         WindowStartupLocation="CenterOwner"
         Background="{DynamicResource BackgroundColor}"
         FontFamily="Segoe UI">
+    <Window.Resources>
+
+        <Style x:Key="CalendarButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#293330"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="2"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="ButtonBorder"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="5">
+
+                            <ContentPresenter
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        RecognizesAccessKey="True"
+                        TextElement.Foreground="{TemplateBinding Foreground}"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Background"
+                                Value="#EAE8E0"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Background"
+                                Value="#A8B5A5"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground"
+                                Value="#B8B8B0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
 
     <Grid Margin="30">
         <Grid.RowDefinitions>
@@ -75,14 +125,103 @@
                        Foreground="{DynamicResource TextColor}"
                        Margin="0,18,0,7"/>
 
-            <DatePicker x:Name="PaymentDatePicker"
-                        Height="40"
-                        FontSize="14"
-                        SelectedDate="{x:Static sys:DateTime.Today}"
-                        Background="#FBFAF7"
-                        Foreground="#293330"
-                        BorderBrush="#E2E0D8"
-                        xmlns:sys="clr-namespace:System;assembly=mscorlib"/>
+            <Grid x:Name="PaymentDateField">
+                <Border Height="42"
+            Background="#FBFAF7"
+            BorderBrush="#E2E0D8"
+            BorderThickness="1"
+            CornerRadius="6"/>
+
+                <Button Height="42"
+            Background="Transparent"
+            BorderThickness="0"
+            Cursor="Hand"
+            Click="PaymentCalendarToggleButton_Click">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="45"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock x:Name="PaymentDateText"
+                       Grid.Column="0"
+                       Text="Выберите дату"
+                       FontSize="14"
+                       Foreground="#293330"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Margin="12,0,0,0"/>
+
+                        <TextBlock Grid.Column="1"
+                       Text="▦"
+                       FontSize="19"
+                       Foreground="#737D76"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+                    </Grid>
+                </Button>
+
+                <Popup x:Name="PaymentCalendarPopup"
+           PlacementTarget="{Binding ElementName=PaymentDateField}"
+           Placement="Bottom"
+           VerticalOffset="5"
+           StaysOpen="False"
+           AllowsTransparency="True"
+           PopupAnimation="Fade">
+
+                    <Border Width="310"
+                Background="#FAF9F6"
+                BorderBrush="#E2E0D8"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="15">
+
+                        <StackPanel>
+                            <Grid Margin="0,0,0,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="40"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="0"
+                            Content="‹"
+                            FontSize="24"
+                            Style="{StaticResource CalendarButtonStyle}"
+                            Click="PaymentPreviousMonth_Click"/>
+
+                                <TextBlock x:Name="PaymentCalendarMonthText"
+                               Grid.Column="1"
+                               FontSize="15"
+                               FontWeight="SemiBold"
+                               Foreground="#293330"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+
+                                <Button Grid.Column="2"
+                            Content="›"
+                            FontSize="24"
+                            Style="{StaticResource CalendarButtonStyle}"
+                            Click="PaymentNextMonth_Click"/>
+                            </Grid>
+
+                            <UniformGrid Columns="7" Margin="0,0,0,7">
+                                <TextBlock Text="Пн" Foreground="#737D76" TextAlignment="Center" FontSize="12"/>
+                                <TextBlock Text="Вт" Foreground="#737D76" TextAlignment="Center" FontSize="12"/>
+                                <TextBlock Text="Ср" Foreground="#737D76" TextAlignment="Center" FontSize="12"/>
+                                <TextBlock Text="Чт" Foreground="#737D76" TextAlignment="Center" FontSize="12"/>
+                                <TextBlock Text="Пт" Foreground="#737D76" TextAlignment="Center" FontSize="12"/>
+                                <TextBlock Text="Сб" Foreground="#737D76" TextAlignment="Center" FontSize="12"/>
+                                <TextBlock Text="Вс" Foreground="#737D76" TextAlignment="Center" FontSize="12"/>
+                            </UniformGrid>
+
+                            <UniformGrid x:Name="PaymentCalendarDaysPanel"
+                             Columns="7"/>
+                        </StackPanel>
+                    </Border>
+                </Popup>
+            </Grid>
 
             <TextBlock Text="Статус платежа"
                        FontSize="13"

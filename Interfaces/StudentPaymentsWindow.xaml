@@ -94,71 +94,177 @@
 
     </Window.Resources>
 
+
     <Grid Margin="30">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+        <!-- Заголовок -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,18">
             <TextBlock Text="История платежей"
-                       FontSize="25"
-                       FontWeight="SemiBold"
-                       Foreground="{DynamicResource TextColor}"/>
+                   FontSize="25"
+                   FontWeight="SemiBold"
+                   Foreground="{DynamicResource TextColor}"/>
 
             <TextBlock x:Name="StudentNameText"
-                       FontSize="14"
-                       Foreground="{DynamicResource SecondaryTextColor}"
-                       Margin="0,6,0,0"/>
+                   FontSize="14"
+                   Foreground="{DynamicResource SecondaryTextColor}"
+                   Margin="0,6,0,0"/>
         </StackPanel>
 
+        <!-- Финансовая сводка -->
         <Border Grid.Row="1"
-                Background="{DynamicResource SurfaceColor}"
-                CornerRadius="8"
-                BorderBrush="{DynamicResource BorderColor}"
-                BorderThickness="1"
-                Padding="10">
+            Background="{DynamicResource SurfaceColor}"
+            BorderBrush="{DynamicResource BorderColor}"
+            BorderThickness="1"
+            CornerRadius="8"
+            Padding="18"
+            Margin="0,0,0,18">
 
-            <DataGrid x:Name="StudentPaymentsDataGrid"
-                      Style="{StaticResource ModernDataGridStyle}"
-                      AutoGenerateColumns="False"
-                      IsReadOnly="True"
-                      SelectionMode="Single"
-                      SelectionUnit="FullRow"
-                      HeadersVisibility="Column"
-                      CanUserAddRows="False">
+            <StackPanel>
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID"
-                                        Binding="{Binding [ID]}"
-                                        Width="70"/>
+                <Grid Margin="0,0,0,15">
+                    <TextBlock Text="Финансовое состояние"
+                           FontSize="15"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextColor}"
+                           VerticalAlignment="Center"/>
 
-                    <DataGridTextColumn Header="Сумма"
-                                        Binding="{Binding [Сумма], StringFormat={}{0:N2} ₽}"
-                                        Width="*"/>
+                    <TextBlock x:Name="FinancialStatusText"
+                           Text="Не оплачено"
+                           FontSize="12"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource SecondaryTextColor}"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"/>
+                </Grid>
 
-                    <DataGridTextColumn Header="Дата платежа"
-                                        Binding="{Binding [Дата платежа], StringFormat={}{0:dd.MM.yyyy}}"
-                                        Width="*"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                    <DataGridTextColumn Header="Статус"
-                                        Binding="{Binding [Статус]}"
-                                        Width="*"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Стоимость обучения"
+                               FontSize="11"
+                               Foreground="{DynamicResource SecondaryTextColor}"/>
+
+                        <TextBlock x:Name="TuitionCostText"
+                               Text="0,00 ₽"
+                               FontSize="19"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextColor}"
+                               Margin="0,5,0,0"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Оплачено"
+                               FontSize="11"
+                               Foreground="{DynamicResource SecondaryTextColor}"/>
+
+                        <TextBlock x:Name="PaidAmountText"
+                               Text="0,00 ₽"
+                               FontSize="19"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextColor}"
+                               Margin="0,5,0,0"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Осталось"
+                               FontSize="11"
+                               Foreground="{DynamicResource SecondaryTextColor}"/>
+
+                        <TextBlock x:Name="RemainingAmountText"
+                               Text="0,00 ₽"
+                               FontSize="19"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextColor}"
+                               Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Grid>
+
+                <ProgressBar x:Name="PaymentProgressBar"
+                         Minimum="0"
+                         Maximum="100"
+                         Value="0"
+                         Height="7"
+                         Margin="0,16,0,6"
+                         Background="{DynamicResource MutedSurfaceColor}"
+                         Foreground="{DynamicResource Sage}"
+                         BorderThickness="0"/>
+
+                <TextBlock x:Name="PaymentProgressText"
+                       Text="Оплачено 0%"
+                       FontSize="11"
+                       Foreground="{DynamicResource SecondaryTextColor}"/>
+
+            </StackPanel>
         </Border>
 
-        <Button Grid.Row="2"
-                Content="Закрыть"
-                Width="110"
-                Height="40"
-                HorizontalAlignment="Right"
-                Margin="0,20,0,0"
-                Background="{DynamicResource Sage}"
-                Foreground="{DynamicResource TextColor}"
-                BorderThickness="0"
-                Cursor="Hand"
-                Click="Close_Click"/>
+        <!-- История платежей -->
+        
+<Border Grid.Row="2"
+        Background="{DynamicResource SurfaceColor}"
+        CornerRadius="8"
+        BorderBrush="{DynamicResource BorderColor}"
+        BorderThickness="1"
+        Padding="10">
+
+    <DataGrid x:Name="StudentPaymentsDataGrid"
+              Style="{StaticResource ModernDataGridStyle}"
+              HeadersVisibility="Column"
+              SelectionMode="Single"
+              CanUserSortColumns="True"
+              CanUserReorderColumns="False"
+              CanUserResizeColumns="True"
+              IsReadOnly="True"
+              AutoGenerateColumns="False"
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+              ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+        <DataGrid.Columns>
+
+            <DataGridTextColumn Header="№"
+                                Binding="{Binding [ID]}"
+                                Width="65"/>
+
+            <DataGridTextColumn Header="Сумма платежа"
+                                Binding="{Binding [Сумма], StringFormat={}{0:N2} ₽}"
+                                Width="2*"/>
+
+            <DataGridTextColumn Header="Дата платежа"
+                                Binding="{Binding [Дата платежа], StringFormat={}{0:dd.MM.yyyy}}"
+                                Width="1.5*"/>
+
+            <DataGridTextColumn Header="Статус"
+                                Binding="{Binding [Статус]}"
+                                Width="1.5*"/>
+
+        </DataGrid.Columns>
+    </DataGrid>
+</Border>
+
+
+        <!-- Кнопка закрытия -->
+        <Button Grid.Row="3"
+            Content="Закрыть"
+            Width="110"
+            Height="40"
+            HorizontalAlignment="Right"
+            Margin="0,18,0,0"
+            Background="{DynamicResource Sage}"
+            Foreground="{DynamicResource TextColor}"
+            BorderThickness="0"
+            Cursor="Hand"
+            Click="Close_Click"/>
+
     </Grid>
+
 </Window>
